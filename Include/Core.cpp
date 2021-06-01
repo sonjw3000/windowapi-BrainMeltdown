@@ -1,0 +1,112 @@
+#include "Core.h"
+#include "GameManager/GameManager.h"
+
+Core* Core::m_pInst = NULL;
+
+
+Core::Core()
+{
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(160);
+}
+
+Core::~Core()
+{
+
+}
+
+bool Core::Init(HINSTANCE hInst)
+{
+	this->m_hInst = hInst;
+
+	m_tWndSize.cx = 1280;
+	m_tWndSize.cy = 720;
+
+	WNDCLASSEX WndClass;
+
+	WndClass.cbSize = sizeof(WNDCLASSEX);
+	WndClass.lpfnWndProc = WndProc;
+	WndClass.style = CS_HREDRAW | CS_VREDRAW;
+	WndClass.cbClsExtra = 0;
+	WndClass.cbWndExtra = 0;
+	WndClass.hInstance = m_hInst;
+	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	WndClass.lpszMenuName = NULL;
+	WndClass.lpszClassName = L"Class Name";
+	WndClass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+
+	RegisterClassEx(&WndClass);
+
+	RECT rt = { 0,0,1280,720 };
+	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, NULL);
+	m_hWnd = CreateWindow(L"Class Name", L"Title", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0,
+		rt.right - rt.left, rt.bottom - rt.top, NULL, NULL, m_hInst, NULL);
+
+	ShowWindow(m_hWnd, SW_SHOW);
+	UpdateWindow(m_hWnd);
+
+	return true;
+}
+
+
+int Core::Run()
+{
+	MSG Message;
+
+	while (GetMessage(&Message, NULL, 0, 0)) {
+		TranslateMessage(&Message);
+		DispatchMessage(&Message);
+	}
+
+	return Message.wParam;
+}
+
+
+LRESULT Core::WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+{
+	HDC hdc = NULL, memdc;
+	PAINTSTRUCT ps;
+
+	HBITMAP hBitmap;
+
+	switch (Msg) {
+	case WM_CREATE:
+		GameManager::GetInst()->init();
+
+		// Set Main Timer;
+		SetTimer(hWnd, 0, 1, NULL);
+		break;
+
+	case WM_PAINT:
+		break;
+		
+	case WM_KEYDOWN:
+		if (wParam == 'g') 
+			Core::GetInst()->setGridShow();
+		break;
+
+
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		GameManager::DestroyInst();
+		break;
+
+	case WM_TIMER:
+		switch (wParam) {
+		case 0:
+			GameManager::GetInst()->input();
+			GameManager::GetInst()->update();
+			GameManager::GetInst()->collision();
+			GameManager::GetInst()->render(hdc);
+
+
+			InvalidateRect(hWnd, NULL, FALSE);
+			break;
+		}
+		break;
+	}
+
+	return DefWindowProc(hWnd, Msg, wParam, lParam);
+}

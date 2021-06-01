@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="00. Core">
+      <UniqueIdentifier>{47e852f8-a966-47a1-8577-cbe8f811bd24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01 Object">
+      <UniqueIdentifier>{f3772f6e-6890-4397-92fd-d42692d7ee5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01 Object\1%29 Moving">
+      <UniqueIdentifier>{ccf076f5-0361-4c56-9a2b-9c63fec291a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01 Object\2%29 Static">
+      <UniqueIdentifier>{7803ade4-e3bf-4f65-85d7-f608db44318d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01 Object\1%29 Moving\1- Player">
+      <UniqueIdentifier>{1bf2e8e3-5bef-4308-baa5-c502aa4896f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene">
+      <UniqueIdentifier>{26bd77fa-cf67-4a51-b7dc-b5315ba79757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Tile">
+      <UniqueIdentifier>{153aaf0e-95a2-4e19-ac7e-1152b682216f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Manager">
+      <UniqueIdentifier>{58d96064-98b1-46b8-9983-df456496f0b7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>00. Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Object.cpp">
+      <Filter>01 Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MovingObject.cpp">
+      <Filter>01 Object\1%29 Moving</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Player.cpp">
+      <Filter>01 Object\1%29 Moving\1- Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager\GameManager.cpp">
+      <Filter>99. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>03. Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Macro.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>00. Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>01 Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MovingObject.h">
+      <Filter>01 Object\1%29 Moving</Filter>
+    </ClInclude>
+    <ClInclude Include="Type.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Player.h">
+      <Filter>01 Object\1%29 Moving\1- Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager\GameManager.h">
+      <Filter>99. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>03. Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
