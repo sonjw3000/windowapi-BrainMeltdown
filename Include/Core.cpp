@@ -55,10 +55,44 @@ int Core::Run()
 {
 	MSG Message;
 
-	while (GetMessage(&Message, NULL, 0, 0)) {
-		TranslateMessage(&Message);
-		DispatchMessage(&Message);
+	//while (GetMessage(&Message, NULL, 0, 0)) {
+	//	TranslateMessage(&Message);
+	//	DispatchMessage(&Message);
+
+	//	if (!getGameLoop()) break;
+	//}
+
+	HDC hdc = NULL;
+
+	QueryPerformanceFrequency(&m_Sec);
+	QueryPerformanceCounter(&m_Time);
+
+	GameManager::GetInst()->init();
+
+	while (getGameLoop()) {
+		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&Message);
+			DispatchMessage(&Message);
+		}
+		else {
+			// todo
+			LARGE_INTEGER tTime;
+			QueryPerformanceCounter(&tTime);
+
+			m_fDeltaTime = (tTime.QuadPart - m_Time.QuadPart) / (float)m_Sec.QuadPart;
+
+			m_fTimeCnt += m_fDeltaTime;
+
+			m_Time = tTime;
+
+			GameManager::GetInst()->input(m_fDeltaTime);
+			GameManager::GetInst()->update(m_fDeltaTime);
+			GameManager::GetInst()->collision();
+			GameManager::GetInst()->render(hdc);
+		}
 	}
+
+	GameManager::DestroyInst();
 
 	return Message.wParam;
 }
@@ -73,36 +107,36 @@ LRESULT Core::WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 
 	switch (Msg) {
 	case WM_CREATE:
-		GameManager::GetInst()->init();
+		//GameManager::GetInst()->init();
 
 		// Set Main Timer;
-		SetTimer(hWnd, 0, 1, NULL);
+		//SetTimer(hWnd, 0, 1, NULL);
 		break;
 
 	case WM_PAINT:
 		break;
 		
 	case WM_KEYDOWN:
-		if (wParam == 'g') 
-			Core::GetInst()->setGridShow();
+		if (wParam == 'g') Core::GetInst()->setGridShow();
 		break;
 
 
 	case WM_DESTROY:
 		PostQuitMessage(0);
-		GameManager::DestroyInst();
+		Core::GetInst()->setGameLoopFalse();
+		//GameManager::DestroyInst();
 		break;
 
 	case WM_TIMER:
 		switch (wParam) {
 		case 0:
-			GameManager::GetInst()->input();
-			GameManager::GetInst()->update();
-			GameManager::GetInst()->collision();
-			GameManager::GetInst()->render(hdc);
+			//GameManager::GetInst()->input(float fDeltaTile);
+			//GameManager::GetInst()->update();
+			//GameManager::GetInst()->collision();
+			//GameManager::GetInst()->render(hdc);
 
 
-			InvalidateRect(hWnd, NULL, FALSE);
+			//InvalidateRect(hWnd, NULL, FALSE);
 			break;
 		}
 		break;

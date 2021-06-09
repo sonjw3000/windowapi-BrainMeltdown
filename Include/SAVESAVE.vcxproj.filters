@@ -37,6 +37,12 @@
     <Filter Include="99. Manager">
       <UniqueIdentifier>{58d96064-98b1-46b8-9983-df456496f0b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01 Object\1%29 Moving\2- Monster">
+      <UniqueIdentifier>{f03d4190-f5ff-43a2-bf3a-4f6d915c9b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01 Object\2%29 Static\1-Step">
+      <UniqueIdentifier>{0906b4ae-d043-4f2d-9185-2f586ad5eaf8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +68,12 @@
     </ClCompile>
     <ClCompile Include="Scene\Scene.cpp">
       <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Monster.cpp">
+      <Filter>01 Object\1%29 Moving\2- Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Step.cpp">
+      <Filter>01 Object\2%29 Static\1-Step</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="Scene\Scene.h">
       <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Monster.h">
+      <Filter>01 Object\1%29 Moving\2- Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Step.h">
+      <Filter>01 Object\2%29 Static\1-Step</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ protected:
 	virtual ~MovingObject();
 
 private:
-	float m_fSpeed = 0.5;
+	float m_fSpeed = 100;
 
 protected:
 	FRECT m_tBefPos;
@@ -28,7 +28,7 @@ public:
 public:
 	virtual bool init() = 0;
 
-	virtual void input();
-	virtual int update();
+	virtual void input(float fDeltaTile);
+	virtual int update(float fDeltaTile);
 	virtual void render(HDC hdc);
 };

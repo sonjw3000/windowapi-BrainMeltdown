@@ -24,21 +24,20 @@ public:
 public:
 	virtual bool init() = 0;
 
-	virtual void input();
-	virtual int update();
+	virtual void input(float fDeltaTile);
+	virtual int update(float fDeltaTile);
 	virtual void render(HDC hdc);
 
 public:
-	template <typename T>
-	static T* CreateObj(string const& strTag) {
-		T* pObj = new T;
+	//template <typename T>
+	//static T* CreateObj(string const& strTag) {
+	//	T* pObj = new T;
 
-		if (!pObj->Init()) {
-			SAFE_DELETE(pObj);
-			return NULL;
-		}
-
-		return pObj;
-	}
+	//	if (!pObj->Init()) {
+	//		SAFE_DELETE(pObj);
+	//		return NULL;
+	//	}
+	//	return pObj;
+	//}
 
 };

@@ -3,6 +3,7 @@
 #include "../Game.h"
 #include "../Tile.h"
 #include "../Object/Player.h"
+#include "../Object/Step.h"
 
 
 // It has 
@@ -20,12 +21,13 @@ private:
 	CImage m_imgBackGround;
 
 	// movingObjs
-	list<class Player* > m_lsitPlayer;
+	list<class Player* > m_listPlayer;
 	// monster
 	// roller coaster
 	
 	// static Objs
 	// balpan
+	list<class Step*> m_listStep;
 	// button
 
 	// tiles;
@@ -37,8 +39,8 @@ private:
 
 public:
 	void init();
-	void input();
-	void update();
+	void input(float fDeltaTile);
+	void update(float fDeltaTile);
 	void collision();
 	void render(HDC hdc);
 

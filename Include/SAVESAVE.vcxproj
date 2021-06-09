@@ -150,9 +150,11 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="GameManager\GameManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object\Monster.cpp" />
     <ClCompile Include="Object\MovingObject.cpp" />
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Object\Player.cpp" />
+    <ClCompile Include="Object\Step.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
@@ -161,9 +163,11 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager\GameManager.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="Object\Monster.h" />
     <ClInclude Include="Object\MovingObject.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Player.h" />
+    <ClInclude Include="Object\Step.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Type.h" />

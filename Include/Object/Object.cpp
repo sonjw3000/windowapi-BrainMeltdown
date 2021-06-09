@@ -7,14 +7,15 @@ Object::Object()
 
 Object::~Object()
 {
+	if ((HBITMAP)m_tImg != NULL) m_tImg.Destroy();
 }
 
 
-void Object::input()
+void Object::input(float fDeltaTile)
 {
 }
 
-int Object::update()
+int Object::update(float fDeltaTile)
 {
 	return 0;
 }

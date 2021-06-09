@@ -8,8 +8,8 @@
 
 
 #ifdef _DEBUG
-#include <iostream>
 #include <crtdbg.h>
+#include <iostream>
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #endif // _DEBUG
 

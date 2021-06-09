@@ -39,6 +39,15 @@ typedef struct MY_FLOAT_RECT {
 		bottom = other.bottom;
 	}
 
+	operator RECT () const {
+		RECT temp;
+		temp.left = this->left;
+		temp.top = this->top;
+		temp.right = this->right;
+		temp.bottom = this->bottom;
+
+		return temp;		
+	}
 
 	// function
 	BOOL IntersectRect(MY_FLOAT_RECT other) const {
@@ -82,4 +91,10 @@ enum TILE_DATA {
 	TD_BLOCK,			// Áö³ª°¥¼ö ¾øÀ½
 	TD_FLOOR,			// ¹Ù´Ú
 	TD_SPIKE			// ´êÀ¸¸é Á×À½
+};
+
+enum STEP_FOR { 
+	SF_YELLOW = 0,
+	SF_PUR, 
+	SF_ALL
 };

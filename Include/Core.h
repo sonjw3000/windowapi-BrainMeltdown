@@ -27,14 +27,23 @@ private:
 	HDC			m_hdc;
 	SIZE		m_tWndSize;
 
+private:
+	LARGE_INTEGER m_Sec;
+	LARGE_INTEGER m_Time;
+	float m_fDeltaTime;
+	float m_fTimeCnt = 0;
+
 	bool m_bShowGrid = false;
+	bool m_bGameLoop = true;
 
 public:
 	SIZE GetSize() const { return m_tWndSize; }
 	HWND GethWnd() const { return m_hWnd; }
 	bool getGridShow() const { return m_bShowGrid; }
+	bool getGameLoop() const { return m_bGameLoop; }
 
 	void setGridShow() { m_bShowGrid = !m_bShowGrid; }
+	void setGameLoopFalse() { m_bGameLoop = false; }
 
 public:
 	bool Init(HINSTANCE hInst);
