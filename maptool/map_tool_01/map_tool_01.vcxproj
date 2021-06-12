@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{c5bc1c6f-c0c8-411d-93a5-16440f24fd26}</ProjectGuid>
-    <RootNamespace>SAVESAVE</RootNamespace>
+    <ProjectGuid>{6a94e862-5c04-4305-90d5-0bf6b2f14458}</ProjectGuid>
+    <RootNamespace>maptool01</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,23 +72,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>$(ProjectName)_Debug</TargetName>
-    <OutDir>$(SolutionDir)$(Configuration)\../Bin/Debug</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>$(ProjectName)</TargetName>
-    <OutDir>$(SolutionDir)$(Configuration)\../Bin/Release</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>$(ProjectName)_Debug</TargetName>
-    <OutDir>$(SolutionDir)$(Configuration)\../Bin/Debug</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>$(ProjectName)</TargetName>
-    <OutDir>$(SolutionDir)$(Configuration)\../Bin/Release</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,34 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Core.cpp" />
-    <ClCompile Include="GameManager\GameManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Object\Button.cpp" />
-    <ClCompile Include="Object\Monster.cpp" />
-    <ClCompile Include="Object\MovingObject.cpp" />
-    <ClCompile Include="Object\Object.cpp" />
-    <ClCompile Include="Object\Player.cpp" />
-    <ClCompile Include="Object\RollerCoaster.cpp" />
-    <ClCompile Include="Object\Step.cpp" />
-    <ClCompile Include="Scene\Scene.cpp" />
-    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameManager\GameManager.h" />
-    <ClInclude Include="Macro.h" />
-    <ClInclude Include="Object\Button.h" />
-    <ClInclude Include="Object\Monster.h" />
-    <ClInclude Include="Object\MovingObject.h" />
-    <ClInclude Include="Object\Object.h" />
-    <ClInclude Include="Object\Player.h" />
-    <ClInclude Include="Object\RollerCoaster.h" />
-    <ClInclude Include="Object\Step.h" />
-    <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="Tile.h" />
-    <ClInclude Include="Type.h" />
+    <ClInclude Include="resource1.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

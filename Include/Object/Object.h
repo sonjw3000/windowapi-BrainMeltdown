@@ -24,8 +24,8 @@ public:
 public:
 	virtual bool init() = 0;
 
-	virtual void input(float fDeltaTile);
-	virtual int update(float fDeltaTile);
+	virtual void input(float fDeltaTime);
+	virtual int update(float fDeltaTime);
 	virtual void render(HDC hdc);
 
 public:

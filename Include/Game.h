@@ -1,5 +1,5 @@
 #pragma once
-
+#pragma warning (disable : 4996)
 #include <Windows.h>
 #include <vector>
 #include <list>
@@ -19,7 +19,7 @@ using namespace std;
 #include "Type.h"
 #include "Macro.h"
 
-
+#define TILESIZE 40
 
 
 template <typename T>

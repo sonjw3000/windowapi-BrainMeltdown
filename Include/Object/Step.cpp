@@ -5,11 +5,11 @@ bool Step::init()
 	return true;
 }
 
-void Step::input(float fDeltaTile)
+void Step::input(float fDeltaTime)
 {
 }
 
-int Step::update(float fDeltaTile)
+int Step::update(float fDeltaTime)
 {
 	return 0;
 }
@@ -23,13 +23,13 @@ void Step::render(HDC hdc)
 #ifdef DEBUG
 	HBRUSH hBrush = NULL, oBrush;
 	switch (m_eType) {
-	case SF_ALL:
-	case SF_PUR:
-	case SF_YELLOW:
+	case STEP_FOR::SF_ALL:
+	case STEP_FOR::SF_PUR:
+	case STEP_FOR::SF_YELLOW:
 		switch (m_eType) {
-		case SF_ALL:	hBrush = CreateSolidBrush(RGB(150, 75, 0));		break;
-		case SF_PUR:	hBrush = CreateSolidBrush(RGB(139, 75, 255));	break;
-		case SF_YELLOW:	hBrush = CreateSolidBrush(RGB(255, 255, 0));	break;
+		case STEP_FOR::SF_ALL:		hBrush = CreateSolidBrush(RGB(150, 75, 0));		break;
+		case STEP_FOR::SF_PUR:		hBrush = CreateSolidBrush(RGB(139, 75, 255));	break;
+		case STEP_FOR::SF_YELLOW:	hBrush = CreateSolidBrush(RGB(255, 255, 0));	break;
 		}
 		oBrush = (HBRUSH)SelectObject(hdc, hBrush);
 

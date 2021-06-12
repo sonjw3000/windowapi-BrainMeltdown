@@ -23,7 +23,7 @@ private:
 	float m_bJumpSpeed = 0;
 
 private:
-	MOVE_DIR m_eMoveDir = MD_NONE;
+	MOVE_DIR m_eMoveDir = MOVE_DIR::MD_NONE;
 	float m_fCnt = 0;
 
 public:
@@ -54,8 +54,8 @@ public:
 public:
 	virtual bool init();
 
-	virtual void input(float fDeltaTile);
-	virtual int update(float fDeltaTile);
+	virtual void input(float fDeltaTime);
+	virtual int update(float fDeltaTime);
 	virtual void render(HDC hdc);
 };
 

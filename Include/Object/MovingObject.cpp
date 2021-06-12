@@ -15,12 +15,12 @@ void MovingObject::Move(float dx, float dy)
 
 void MovingObject::MoveXFromSpeed(MOVE_DIR eDir)
 {
-	m_tPosition.OffsetRect(m_fSpeed * eDir, 0.0);
+	m_tPosition.OffsetRect(m_fSpeed * static_cast<int>(eDir), 0.0);
 }
 
 void MovingObject::MoveYFromSpeed(MOVE_DIR eDir)
 {
-	m_tPosition.OffsetRect(0.0, m_fSpeed * eDir);
+	m_tPosition.OffsetRect(0.0, m_fSpeed * static_cast<int>(eDir));
 }
 
 void MovingObject::goBack()
@@ -51,12 +51,12 @@ bool MovingObject::init()
 	return false;
 }
 
-void MovingObject::input(float fDeltaTile)
+void MovingObject::input(float fDeltaTime)
 {
 	
 }
 
-int MovingObject::update(float fDeltaTile)
+int MovingObject::update(float fDeltaTime)
 {
 	return 0;
 }

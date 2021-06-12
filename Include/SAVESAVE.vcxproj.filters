@@ -43,6 +43,12 @@
     <Filter Include="01 Object\2%29 Static\1-Step">
       <UniqueIdentifier>{0906b4ae-d043-4f2d-9185-2f586ad5eaf8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01 Object\1%29 Moving\3- RollerCoaster">
+      <UniqueIdentifier>{e6bca2f7-b33f-4bff-9da1-976cc9a51835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01 Object\2%29 Static\2- Button">
+      <UniqueIdentifier>{6ed3c53b-338e-49d0-a77d-36f97c13de66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="Object\Step.cpp">
       <Filter>01 Object\2%29 Static\1-Step</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RollerCoaster.cpp">
+      <Filter>01 Object\1%29 Moving\3- RollerCoaster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Button.cpp">
+      <Filter>01 Object\2%29 Static\2- Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="Object\Step.h">
       <Filter>01 Object\2%29 Static\1-Step</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RollerCoaster.h">
+      <Filter>01 Object\1%29 Moving\3- RollerCoaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Button.h">
+      <Filter>01 Object\2%29 Static\2- Button</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

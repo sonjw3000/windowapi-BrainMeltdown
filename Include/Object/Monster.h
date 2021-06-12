@@ -4,7 +4,7 @@
 
 class Monster : public MovingObject {
 private:
-	MOVE_DIR m_eMoveDir = MD_NONE;
+	MOVE_DIR m_eMoveDir = MOVE_DIR::MD_NONE;
 
 public:
 	Monster() = delete;
@@ -12,10 +12,15 @@ public:
 	~Monster();
 
 public:
+	void Reverse();
+
+	MOVE_DIR getDir() const { return m_eMoveDir; }
+
+public:
 	virtual bool init();
 
-	virtual void input(float fDeltaTile);
-	virtual int update(float fDeltaTile);
+	virtual void input(float fDeltaTime);
+	virtual int update(float fDeltaTime);
 	virtual void render(HDC hdc);
 
 };

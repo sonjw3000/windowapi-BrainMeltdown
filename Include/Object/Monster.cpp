@@ -4,19 +4,28 @@ Monster::~Monster()
 {
 }
 
+void Monster::Reverse()
+{
+    m_eMoveDir = m_eMoveDir * -1;
+    m_tPosition = m_tBefPos;
+}
+
 bool Monster::init()
 {
-    setSpeed(1.f);
+    setSpeed(50.0);
+    m_tBefPos = m_tPosition;
     return true;
 }
 
-void Monster::input(float fDeltaTile)
+void Monster::input(float fDeltaTime)
 {
 }
 
-int Monster::update(float fDeltaTile)
+int Monster::update(float fDeltaTime)
 {
-    Move(m_eMoveDir * getSpeed(), 0);
+    m_tBefPos = m_tPosition;
+    Move(static_cast<int>(m_eMoveDir) * getSpeed() * fDeltaTime, 0);
+
     return 0;
 }
 

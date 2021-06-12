@@ -11,11 +11,11 @@ Object::~Object()
 }
 
 
-void Object::input(float fDeltaTile)
+void Object::input(float fDeltaTime)
 {
 }
 
-int Object::update(float fDeltaTile)
+int Object::update(float fDeltaTime)
 {
 	return 0;
 }

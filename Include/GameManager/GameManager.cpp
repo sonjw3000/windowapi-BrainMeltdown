@@ -29,14 +29,14 @@ void GameManager::init()
 }
 
 
-void GameManager::input(float fDeltaTile)
+void GameManager::input(float fDeltaTime)
 {
-	m_pScene->input(fDeltaTile);
+	m_pScene->input(fDeltaTime);
 }
 
-void GameManager::update(float fDeltaTile)
+void GameManager::update(float fDeltaTime)
 {
-	m_pScene->update(fDeltaTile);
+	m_pScene->update(fDeltaTime);
 }
 
 void GameManager::collision()
@@ -58,18 +58,26 @@ void GameManager::collision()
 		POINT tRight = { floor((temp.right) / 40.0), floor((temp.bottom) / 40.0) };
 
 		// 바닥
-		if (m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x]->getTile() == TD_BLOCK ||
-			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x]->getTile() == TD_BLOCK) {
+		TILE_DATA leftBottom = m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x]->getTile();
+		TILE_DATA rightBottom = m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x]->getTile();
+
+		if (leftBottom == TILE_DATA::TD_BLOCK || rightBottom == TILE_DATA::TD_BLOCK ||
+			leftBottom == TILE_DATA::TD_FLOOR || rightBottom == TILE_DATA::TD_FLOOR) {
 			dPlayer->Move(0,  40 * tLeft.y - temp.bottom);
 			//printf("%f", temp.bottom - 40 * tLeft.y);
 			dPlayer->notFalling();
 			bCollide = true;
 		}
+		else if (leftBottom == TILE_DATA::TD_SPIKE || rightBottom == TILE_DATA::TD_SPIKE) {
+			// gameOver;
+			Core::GetInst()->setGameLoopFalse();
+		}
 		else dPlayer->goFalling();						// NON
 		
 		// 벽?
-		if (m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen]->getTile() == TD_BLOCK ||
-			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TD_BLOCK) dPlayer->goBackX();
+		if (m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_BLOCK ||
+			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_BLOCK) 
+			dPlayer->goBackX();
 
 	}
 
@@ -80,12 +88,12 @@ void GameManager::collision()
 	//}
 
 
-	// 플레이어와 장애물 충돌 확인		m_pStaticObjList
+	// 플레이어와 장애물 충돌 확인		(step, rollercoaster, button)
 	bCollide = false;
 	for (auto& dPlayer : m_pScene->m_listPlayer) {
-
+		// step
 		for (auto const dStep : m_pScene->m_listStep) {
-			if (dStep->getType() - dPlayer->getPlayerNum()) {
+			if (static_cast<int>(dStep->getType()) - dPlayer->getPlayerNum()) {
 				if (dPlayer->getPosition().IntersectRect(dStep->getPosition())) {
 					// hit side
 					if(dPlayer->getPosition().bottom > dStep->getPosition().bottom && dPlayer->getPosition().top < dStep->getPosition().top)
@@ -105,11 +113,63 @@ void GameManager::collision()
 						dPlayer->hitCeil();
 						bCollide = true;
 					}
-					printf("%f\n", dPlayer->getPosition().top - dStep->getPosition().bottom);
+					//printf("%f\n", dPlayer->getPosition().top - dStep->getPosition().bottom);
 				}
 			}
 		}
 		
+		// rollercoaster
+		for (auto const dRCoaster : m_pScene->m_listRollerCoaster) {
+			if (static_cast<int>(dRCoaster->getType()) - dPlayer->getPlayerNum()) {
+				if (dPlayer->getPosition().IntersectRect(dRCoaster->getPosition())) {
+					// hit side
+					if (dPlayer->getPosition().bottom > dRCoaster->getPosition().bottom && dPlayer->getPosition().top < dRCoaster->getPosition().top)
+						dPlayer->goBackX();
+
+					// hit top
+					else if (dPlayer->getPosition().bottom - dRCoaster->getPosition().bottom < 0) {
+						while (dPlayer->getPosition().IntersectRect(dRCoaster->getPosition())) dPlayer->Move(0, -0.1);
+
+						dPlayer->notFalling();
+						bCollide = true;
+					}
+					// hit bottom
+					else if (dPlayer->getPosition().top - dRCoaster->getPosition().bottom < 0) {
+						while (dPlayer->getPosition().IntersectRect(dRCoaster->getPosition())) dPlayer->Move(0, 0.1);
+
+						dPlayer->hitCeil();
+						bCollide = true;
+					}
+					//printf("%f\n", dPlayer->getPosition().top - dRCoaster->getPosition().bottom);
+				}
+			}
+		}
+	}
+	
+	// button
+	// turn off everything
+	for (auto& d : m_pScene->m_listRollerCoaster) d->minusCount();
+
+	for (auto& dButton : m_pScene->m_listButton) {
+		
+		for (auto& dPlayer : m_pScene->m_listPlayer) {
+			if (dPlayer->getPosition().IntersectRect(dButton->getPosition())) {
+				//if (dButton->isActive()) break;
+				dButton->setActiveState(true);
+
+				// turn on everything
+				for (auto& d : m_pScene->m_listRollerCoaster) if (d->getGroup() == dButton->getGroupCtrl())
+					d->plusCount();
+				break;
+			}
+			else {
+				if (dButton->isFixed()) break;
+				dButton->setActiveState(false);
+
+				// turn off everything
+				//for (auto& d : m_pScene->m_listRollerCoaster) if (d->getGroup() == dButton->getGroupCtrl()) d->minusCount();
+			}
+		}
 	}
 
 	// 플레이어와 플레이어 충돌 확인
@@ -135,19 +195,34 @@ void GameManager::collision()
 		//else 
 	}
 
+	// 몬스터와 몬스터 충돌
+	for (auto iter = m_pScene->m_listMonster.begin(); iter != m_pScene->m_listMonster.end(); ++iter) {
+		for (auto inIt = (iter + 1); inIt != m_pScene->m_listMonster.end(); ++inIt) {
+			if ((*iter)->getPosition().IntersectRect((*inIt)->getPosition())) {
+				(*iter)->goBack();
+				(*inIt)->goBack();
 
-
-	// 몬스터와 장애물 충돌 확인
-	//bCollide = false;
-	//for (auto const dMonster : m_pMonsterList) {
-	//	for (auto const dObs : m_pStaticObjList)
-	//		if (CollideCheck(dMonster->getPosition(), dObs->getPosition())) bCollide = true;
-
-	//	if (bCollide) {
-	//		// monster change dircetb  
-	//		printf("monster obs\n");
-	//	}
-	//}
+				(*iter)->Reverse();
+				(*inIt)->Reverse();
+				break;
+			}
+		}
+	}
+	// 몬스터와 타일맵 충돌(벽)
+	for (auto d : m_pScene->m_listMonster) {
+		POINT t;
+		switch (d->getDir()) {
+		case MOVE_DIR::MD_BACK:		t = { static_cast<LONG>(d->getPosition().left), static_cast<LONG>(d->getPosition().top) };	break;
+		case MOVE_DIR::MD_FRONT:	t = { static_cast<LONG>(d->getPosition().right), static_cast<LONG>(d->getPosition().top) };	break;
+		default: continue;
+		}
+		t.x = t.x / 40;
+		t.y = t.y / 40;
+			//tLeft.y* m_pScene->m_iTileXLen + tLeft.x
+		if (m_pScene->m_listTiles[t.y * m_pScene->m_iTileXLen + t.x]->getTile() == TILE_DATA::TD_BLOCK || 
+			m_pScene->m_listTiles[t.y * m_pScene->m_iTileXLen + t.x]->getTile() == TILE_DATA::TD_FLOOR)
+			d->Reverse();		
+	}
 
 	//if (!bCollide) {
 	//	m_pScene->m_listPlayer.front()->goFalling();

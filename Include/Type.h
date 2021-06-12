@@ -41,10 +41,10 @@ typedef struct MY_FLOAT_RECT {
 
 	operator RECT () const {
 		RECT temp;
-		temp.left = this->left;
-		temp.top = this->top;
-		temp.right = this->right;
-		temp.bottom = this->bottom;
+		temp.left = static_cast<int>(this->left);
+		temp.top = static_cast<int>(this->top);
+		temp.right = static_cast<int>(this->right);
+		temp.bottom = static_cast<int>(this->bottom);
 
 		return temp;		
 	}
@@ -80,20 +80,31 @@ typedef struct MY_FLOAT_RECT {
 
 }FRECT;
 
-enum MOVE_DIR {
+typedef struct MY_FLOAT_POINT {
+	float x, y;
+}FPOINT;
+
+// enum
+// Move Direction
+enum class MOVE_DIR {
 	MD_BACK = -1,
 	MD_NONE,
 	MD_FRONT
 };
+constexpr MOVE_DIR operator*(MOVE_DIR ori, int a) {
+	return static_cast<MOVE_DIR>(static_cast<int>(ori) * a);
+}
 
-enum TILE_DATA {
+// Tile Data
+enum class TILE_DATA {
 	TD_NON = 0,			// ¾Æ¹«°Íµµ ¾Æ´Ô
 	TD_BLOCK,			// Áö³ª°¥¼ö ¾øÀ½
 	TD_FLOOR,			// ¹Ù´Ú
 	TD_SPIKE			// ´êÀ¸¸é Á×À½
 };
 
-enum STEP_FOR { 
+// Who can use this step
+enum class STEP_FOR { 
 	SF_YELLOW = 0,
 	SF_PUR, 
 	SF_ALL

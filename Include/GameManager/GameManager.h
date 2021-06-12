@@ -35,8 +35,8 @@ public:
 	void init();
 
 public:
-	void input(float fDeltaTile);
-	void update(float fDeltaTile);
+	void input(float fDeltaTime);
+	void update(float fDeltaTime);
 	void collision();
 	void render(HDC hdc);
 
