@@ -42,7 +42,7 @@ private:
 
 	// and camera;
 	FPOINT m_CameraOffset = { 0.0,0.0 };
-	const SIZE m_CameraRectSize = { 1000,750 };
+	const SIZE m_CameraRectSize = { 800,800 };
 	float dx;
 	//RECT m_rtCamera;
 

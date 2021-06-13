@@ -64,33 +64,16 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 		m_listPlayer.push_back(p1);
 
 
-		fp = fopen("Scene/01_TestScene.txt", "r");
-		
-
-
-		// get x,y size
-		//fscanf(fp, "%d %d", &m_iTileXLen, &m_iTileYLen);
-
-		//// get tiles
-		//for (int i = 0; i < m_iTileYLen; ++i) {
-		//	for (int j = 0; j < m_iTileXLen; ++j) {
-		//		TILE_DATA temp;
-		//		fscanf(fp, "%d", &temp);
-
-
-		//		Tile* t = new Tile(temp);
-
-
-		//		m_listTiles.push_back(t);
-		//	}
-		//}
-
-
-		//fclose(fp);
-
+		//fp = fopen("Scene/01_TestScene.txt", "r");
+		fp = fopen("Scene/r.txt", "r");
 	}
 		break;
 
+	case 999:				// game over;
+		m_iTileYLen = 0;
+		m_iTileXLen = 0;
+		m_imgBackGround.Load(TEXT("Resource/gameovertemp.png"));
+		break;
 	}
 
 	loadFile(fp);
@@ -100,6 +83,7 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 
 Scene::~Scene()
 {
+	m_imgBackGround.Destroy();
 	Safe_Delete_VecList(m_listPlayer);
 	Safe_Delete_VecList(m_listTiles);
 	Safe_Delete_VecList(m_listStep);
@@ -200,7 +184,8 @@ void Scene::input(float fDeltaTime)
 
 	// camera
 	FPOINT pCenter;
-	
+	if (m_listPlayer.empty()) return;
+
 	pCenter.x = (m_listPlayer.front()->getPosition().left + m_listPlayer.back()->getPosition().left) / 2;
 	pCenter.y = (m_listPlayer.front()->getPosition().bottom + m_listPlayer.back()->getPosition().bottom) / 2;
 
@@ -241,8 +226,14 @@ void Scene::render(HDC hdc)
 	m_imgBackGround.StretchBlt(memdc, { 0,0,Core::GetInst()->GetSize().cx ,Core::GetInst()->GetSize().cy }, SRCCOPY);
 
 	// draw Tiles
-	for (int i = 0; i < m_iTileYLen; ++i) {
-		for (int j = 0; j < m_iTileXLen; ++j) {
+	int x = m_CameraOffset.x / 40 - 1;
+	int y = m_CameraOffset.y / 40 - 1;
+
+	if (x < 0) x = 0;
+	if (y < 0) y = 0;
+	for (int i = y; i < y + 20; ++i) {
+		for (int j = x; j < x + 34; ++j) {
+
 			if (m_listTiles[m_iTileXLen * i + j]->getTile() == TILE_DATA::TD_BLOCK) 
 				Rectangle(memdc, j * 40, i * 40, j * 40 + 40, i * 40 + 40);
 		}

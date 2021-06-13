@@ -8,13 +8,18 @@ private:
 
 public:
 	Monster() = delete;
-	Monster(RECT pos, MOVE_DIR mdr) : m_eMoveDir(mdr) { setPosition(pos); }
+	Monster(RECT pos, MOVE_DIR mdr);
 	~Monster();
 
 public:
 	void Reverse();
 
 	MOVE_DIR getDir() const { return m_eMoveDir; }
+
+private:
+	int m_iImageSprite = 0;
+	int m_iMaxImageSprite = 7;
+	float m_fCnt = 0;
 
 public:
 	virtual bool init();

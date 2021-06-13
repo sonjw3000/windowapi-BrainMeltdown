@@ -7,7 +7,7 @@ private:
 	int m_iGroup;
 	STEP_FOR m_eType;
 	bool m_bAlive = true;
-
+	int m_ibuttonAliveCnt = m_bAlive;
 public:
 	Step() = delete;
 	Step(STEP_FOR sf, RECT pos) : m_eType(sf) { setPosition(pos); }
@@ -19,10 +19,15 @@ public:
 	bool isAlive() { return m_bAlive; }
 
 public:
-	void setAliveState(bool al) { m_bAlive = al; }
 	void setGroup(int i) { m_iGroup = i; }
 
 	int getGroup() { return m_iGroup; }
+	int getCount() { return m_ibuttonAliveCnt; }
+
+public:
+	void plusCount() { m_ibuttonAliveCnt++; }
+	void minusCount() { m_ibuttonAliveCnt--; if (m_ibuttonAliveCnt < 0) m_ibuttonAliveCnt = 0; }
+
 public:
 
 public:

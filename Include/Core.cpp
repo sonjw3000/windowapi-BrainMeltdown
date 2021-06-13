@@ -130,13 +130,6 @@ LRESULT Core::WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	case WM_TIMER:
 		switch (wParam) {
 		case 0:
-			//GameManager::GetInst()->input(float fDeltaTime);
-			//GameManager::GetInst()->update();
-			//GameManager::GetInst()->collision();
-			//GameManager::GetInst()->render(hdc);
-
-
-			//InvalidateRect(hWnd, NULL, FALSE);
 			break;
 		}
 		break;

@@ -20,7 +20,16 @@ public:
 
 private:
 	bool m_bFalling = true;
-	float m_bJumpSpeed = 0;
+	bool m_bSit = false;
+	bool m_bSitComplete = false;
+	bool m_bBeforeSit = false;
+
+private:
+	bool m_bLand = false;
+	bool m_bBefJump = false;
+
+private:
+	float m_fJumpSpeed = 0;
 
 private:
 	MOVE_DIR m_eMoveDir = MOVE_DIR::MD_NONE;
@@ -30,6 +39,7 @@ public:
 	//bool isMoving() { return m_bMoving; }
 
 private:
+	int m_iSpriteY;
 	int m_iImageSprite = 4;
 	int m_iMaxImageSprite = 4;
 	
@@ -39,16 +49,16 @@ public:
 	void updateSprite() { m_iImageSprite++; m_iImageSprite %= m_iMaxImageSprite; }
 
 public:
-	float getFallingSpeed() const { return m_bJumpSpeed; }
+	float getFallingSpeed() const { return m_fJumpSpeed; }
 
 public:
 	bool isFalling() { return m_bFalling; }
 	int getPlayerNum() { return m_iPlayerNum; }
 public:
-	void notFalling() { m_bFalling = false; m_bJumpSpeed = 0; }
+	void notFalling() { m_bFalling = false; m_fJumpSpeed = 0; }
 	void goFalling() { m_bFalling = true; }
 	void hitCeil() {
-		m_bJumpSpeed = 0;
+		m_fJumpSpeed = 0;
 	}
 
 public:

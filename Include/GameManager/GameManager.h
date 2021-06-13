@@ -31,6 +31,8 @@ private:
 private:
 	bool CollideCheck(FRECT rt1, FRECT rt2);
 
+	void sceneChange(int iSceneNum);
+
 public:
 	void init();
 

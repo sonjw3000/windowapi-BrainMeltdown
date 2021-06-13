@@ -5,7 +5,8 @@ RollerCoaster::RollerCoaster(RECT pos, STEP_FOR t, int b, int g, RECT mt)
 { 
 	setPosition(pos);
 
-	m_eDir = m_tInitpos.left > m_tMoveTo.left ? MOVE_DIR::MD_BACK : MOVE_DIR::MD_FRONT;
+	if (m_tInitpos.left != m_tMoveTo.left) m_eDir = m_tInitpos.left > m_tMoveTo.left ? MOVE_DIR::MD_BACK : MOVE_DIR::MD_FRONT;
+	else m_eDir = m_tInitpos.top > m_tMoveTo.top ? MOVE_DIR::MD_UP : MOVE_DIR::MD_DOWN;
 }
 
 RollerCoaster::~RollerCoaster()
@@ -27,19 +28,31 @@ int RollerCoaster::update(float fDeltaTime)
 	//printf("%d\n", m_ibuttonAliveCnt);
 	if (!m_ibuttonAliveCnt) return 1;
 	// move deltatime * speed
-	Move(fDeltaTime * getSpeed() * static_cast<int>(m_eDir), 0);
+	if (-5 < static_cast<int>(m_eDir) && static_cast<int>(m_eDir) < 5) Move(fDeltaTime * getSpeed() * static_cast<int>(m_eDir), 0);
+	else Move(0, fDeltaTime * getSpeed() * static_cast<int>(m_eDir) / 10);
 	// if reached pos? speed * -1
 
 	RECT temp = getPosition();
-	POINT t = { static_cast<int>(m_eDir) == 1 ? m_tMoveTo.right : m_tMoveTo.left, (m_tMoveTo.bottom - m_tMoveTo.top) / 2 + m_tMoveTo.top };
-	if (PtInRect(&temp, t)) {
-		m_eDir = m_eDir * -1;
+	if (-5 < static_cast<int>(m_eDir) && static_cast<int>(m_eDir) < 5) {
+		POINT t = { static_cast<int>(m_eDir) == 1 ? m_tMoveTo.right : m_tMoveTo.left, (m_tMoveTo.bottom - m_tMoveTo.top) / 2 + m_tMoveTo.top };
+		if (PtInRect(&temp, t)) {
+			m_eDir = m_eDir * -1;
 
-		temp = m_tMoveTo;
-		m_tMoveTo = m_tInitpos;
-		m_tInitpos = temp;
+			temp = m_tMoveTo;
+			m_tMoveTo = m_tInitpos;
+			m_tInitpos = temp;
+		}
 	}
+	else {
+		POINT t = { (m_tMoveTo.right - m_tMoveTo.left) / 2 + m_tMoveTo.left, static_cast<int>(m_eDir) == 10 ? m_tMoveTo.bottom : m_tMoveTo.top };
+		if (PtInRect(&temp, t)) {
+			m_eDir = m_eDir * -1;
 
+			temp = m_tMoveTo;
+			m_tMoveTo = m_tInitpos;
+			m_tInitpos = temp;
+		}
+	}
 	return 0;
 }
 

@@ -186,8 +186,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 	{
 		// init
-		for (int i = 0; i < YLEN; ++i) {
-			for (int j = 0; j < XLEN; ++j) {
+		for (int i = 0; i < sWndSize.cy; ++i) {
+			for (int j = 0; j < sWndSize.cx; ++j) {
 				listTile.push_back(TD_NON);
 			}
 		}
@@ -235,11 +235,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 			FILE* fp = fopen(str, "w");
 
 			// 타일맵의 크기
-			fprintf(fp, "%d %d\n", XLEN, YLEN);
+			fprintf(fp, "%d %d\n", sWndSize.cx, sWndSize.cy);
 			// 타일맵 내용
-			for (int i = 0; i < YLEN; ++i) {
-				for (int j = 0; j < XLEN; ++j) {
-					fprintf(fp, "%d ", listTile[i * XLEN + j]);
+			for (int i = 0; i < sWndSize.cy; ++i) {
+				for (int j = 0; j < sWndSize.cx; ++j) {
+					fprintf(fp, "%d ", listTile[i * sWndSize.cx + j]);
 				}
 				fprintf(fp, "\n");
 			}
@@ -442,7 +442,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 
 				for (int i = (ptStart.y + ptTotalOffset.y) / TILESIZE; i <= ptCurrent.y / TILESIZE; ++i) {
 					for (int j = (ptStart.x + ptTotalOffset.x) / TILESIZE; j <= ptCurrent.x / TILESIZE; ++j) {
-						listTile[i * XLEN + j] = g_iCurSet - 1001;
+						listTile[i * sWndSize.cx + j] = g_iCurSet - 1001;
 					}
 				}
 				break;
@@ -602,10 +602,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 				dy = ptStart.y - ptCurrent.y;
 
 				if (ptTotalOffset.x + dx < 0) dx = -ptTotalOffset.x;
-				else if (ptTotalOffset.x + dx > XLEN * TILESIZE - 1280) dx = XLEN * TILESIZE - ptTotalOffset.x - 1280;
+				else if (ptTotalOffset.x + dx > sWndSize.cx * TILESIZE - 1280) dx = sWndSize.cx * TILESIZE - ptTotalOffset.x - 1280;
 				if (ptTotalOffset.y + dy < 0) dy = -ptTotalOffset.y;
-				else if (ptTotalOffset.y + dy > YLEN * TILESIZE - 720) 
-					dy = YLEN * TILESIZE - ptTotalOffset.y - 720;
+				else if (ptTotalOffset.y + dy > sWndSize.cy * TILESIZE - 720)
+					dy = sWndSize.cy * TILESIZE - ptTotalOffset.y - 720;
 
 
 			}
@@ -640,13 +640,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	{
 		hdc = BeginPaint(hWnd, &ps);
 		memdc = CreateCompatibleDC(hdc);
-		hBit = CreateCompatibleBitmap(hdc, TILESIZE * XLEN, TILESIZE * YLEN);
+		hBit = CreateCompatibleBitmap(hdc, TILESIZE * sWndSize.cx, TILESIZE * sWndSize.cy);
 		SelectObject(memdc, hBit);
 
 		// 타일 채우기
-		for (int y = 0; y < YLEN; ++y) {
-			for (int x = 0; x < XLEN; ++x) {
-				switch (listTile[y * XLEN + x]) {
+		for (int y = 0; y < sWndSize.cy; ++y) {
+			for (int x = 0; x < sWndSize.cx; ++x) {
+				switch (listTile[y * sWndSize.cx + x]) {
 				case TD_NON:
 					Rectangle(memdc, x * TILESIZE, y * TILESIZE, (x + 1) * TILESIZE, (y + 1) * TILESIZE);
 					break;

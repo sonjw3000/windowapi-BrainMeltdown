@@ -16,7 +16,7 @@ int Step::update(float fDeltaTime)
 
 void Step::render(HDC hdc)
 {
-	if (!m_bAlive) return;
+	if (m_bAlive == false && !m_ibuttonAliveCnt) return;
 
 	RECT temp = (RECT)getPosition();
 

@@ -89,7 +89,9 @@ typedef struct MY_FLOAT_POINT {
 enum class MOVE_DIR {
 	MD_BACK = -1,
 	MD_NONE,
-	MD_FRONT
+	MD_FRONT,
+	MD_UP = -10,
+	MD_DOWN = 10
 };
 constexpr MOVE_DIR operator*(MOVE_DIR ori, int a) {
 	return static_cast<MOVE_DIR>(static_cast<int>(ori) * a);

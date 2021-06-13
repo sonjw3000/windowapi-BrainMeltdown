@@ -20,6 +20,13 @@ bool GameManager::CollideCheck(FRECT rt1, FRECT rt2)
 	return rt1.IntersectRect(rt2);
 }
 
+void GameManager::sceneChange(int iSceneNum)
+{
+	m_iCurSceneNum = iSceneNum;
+	SAFE_DELETE(m_pScene);
+	m_pScene = new Scene(m_iCurSceneNum);
+}
+
 void GameManager::init()
 {
 	m_iCurSceneNum = -1;
@@ -41,10 +48,12 @@ void GameManager::update(float fDeltaTime)
 
 void GameManager::collision()
 {
+	RECT camRect = { m_pScene->m_CameraOffset.x,m_pScene->m_CameraOffset.y,m_pScene->m_CameraOffset.x + 1280, m_pScene->m_CameraOffset.y + 720 };
 	// 플레이어와 몬스터 충돌 확인
 	bool bCollide = false;
 	for (auto const dPlayer : m_pScene->m_listPlayer) {
 		//for (auto const dMonster : m_pScene->m_lsitMonster) {
+		//  if (!dMonster->getPosition().IntersectRect(camRect)) continue;
 		//	if (CollideCheck(dPlayer->getPosition(), dMonster->getPosition())) bCollide = true;
 		//}
 		//if (bCollide) break;
@@ -70,7 +79,9 @@ void GameManager::collision()
 		}
 		else if (leftBottom == TILE_DATA::TD_SPIKE || rightBottom == TILE_DATA::TD_SPIKE) {
 			// gameOver;
-			Core::GetInst()->setGameLoopFalse();
+			sceneChange(999);
+			//Core::GetInst()->setGameLoopFalse();
+			return;
 		}
 		else dPlayer->goFalling();						// NON
 		
@@ -93,6 +104,8 @@ void GameManager::collision()
 	for (auto& dPlayer : m_pScene->m_listPlayer) {
 		// step
 		for (auto const dStep : m_pScene->m_listStep) {
+			if (!dStep->getPosition().IntersectRect(camRect) || !(dStep->isAlive() + dStep->getCount())) continue;
+
 			if (static_cast<int>(dStep->getType()) - dPlayer->getPlayerNum()) {
 				if (dPlayer->getPosition().IntersectRect(dStep->getPosition())) {
 					// hit side
@@ -103,6 +116,7 @@ void GameManager::collision()
 					else if (dPlayer->getPosition().bottom - dStep->getPosition().bottom < 0) {
 						while (dPlayer->getPosition().IntersectRect(dStep->getPosition())) dPlayer->Move(0, -0.1);
 
+						dPlayer->Move(0, 0.1);
 						dPlayer->notFalling();
 						bCollide = true;
 					}
@@ -120,6 +134,8 @@ void GameManager::collision()
 		
 		// rollercoaster
 		for (auto const dRCoaster : m_pScene->m_listRollerCoaster) {
+			if (!dRCoaster->getPosition().IntersectRect(camRect)) continue;
+
 			if (static_cast<int>(dRCoaster->getType()) - dPlayer->getPlayerNum()) {
 				if (dPlayer->getPosition().IntersectRect(dRCoaster->getPosition())) {
 					// hit side
@@ -130,6 +146,7 @@ void GameManager::collision()
 					else if (dPlayer->getPosition().bottom - dRCoaster->getPosition().bottom < 0) {
 						while (dPlayer->getPosition().IntersectRect(dRCoaster->getPosition())) dPlayer->Move(0, -0.1);
 
+						dPlayer->Move(0, 0.1);
 						dPlayer->notFalling();
 						bCollide = true;
 					}
@@ -149,7 +166,7 @@ void GameManager::collision()
 	// button
 	// turn off everything
 	for (auto& d : m_pScene->m_listRollerCoaster) d->minusCount();
-
+	for (auto& d : m_pScene->m_listStep) if (!d->isAlive()) d->minusCount();
 	for (auto& dButton : m_pScene->m_listButton) {
 		
 		for (auto& dPlayer : m_pScene->m_listPlayer) {
@@ -159,6 +176,8 @@ void GameManager::collision()
 
 				// turn on everything
 				for (auto& d : m_pScene->m_listRollerCoaster) if (d->getGroup() == dButton->getGroupCtrl())
+					d->plusCount();
+				for (auto& d : m_pScene->m_listStep) if (!d->isAlive() &&d->getGroup() == dButton->getGroupCtrl())
 					d->plusCount();
 				break;
 			}
@@ -185,6 +204,7 @@ void GameManager::collision()
 				if (dPlayer->getPosition().bottom - pOtherPlayer->getPosition().bottom < -20) {
 					while (dPlayer->getPosition().IntersectRect(pOtherPlayer->getPosition())) dPlayer->Move(0, -0.1);
 
+					dPlayer->Move(0, 0.1);
 					dPlayer->notFalling();
 					bCollide = true;
 				}
