@@ -7,7 +7,7 @@ Core* Core::m_pInst = NULL;
 Core::Core()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(160);
+	//_CrtSetBreakAlloc(155);
 }
 
 Core::~Core()
@@ -81,33 +81,22 @@ int Core::Run()
 
 			m_fDeltaTime = (tTime.QuadPart - m_Time.QuadPart) / (float)m_Sec.QuadPart;
 
-			printf("delta : %f ", m_fDeltaTime);
-
 			m_fTimeCnt += m_fDeltaTime;
 
 			m_Time = tTime;
 
-			time_t start, end;
-
-			start = clock();
 			GameManager::GetInst()->input(m_fDeltaTime);
-			end = clock();
-			printf("input : %d ", end - start);
-
-			start = clock();
 			GameManager::GetInst()->update(m_fDeltaTime);
-			end = clock();
-			printf("update : %d ", end - start);
-
-			start = clock();
 			GameManager::GetInst()->collision();
-			end = clock();
-			printf("colision : %d ", end - start);
-
-			start = clock();
 			GameManager::GetInst()->render(hdc);
-			end = clock();
-			printf("render : %d\n", end - start);
+
+#ifdef DEBUG
+			TCHAR szTitle[30];
+			swprintf(szTitle, L"FPS : %.1f", 1 / m_fDeltaTime);
+			SetConsoleTitle(szTitle);
+#endif // DEBUG
+
+
 		}
 	}
 

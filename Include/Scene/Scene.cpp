@@ -55,14 +55,11 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 
 	case -1:				// test mapTool
 	{
-		m_imgBackGround.Load(TEXT("Resource/bgTemp.png"));
+		m_imgBackGround.Load(TEXT("Resource/tempBGv2.bmp"));
+		m_iTileImage.Load(TEXT("Resource/tempsprite.bmp"));
 
 		Player* p0 = new Player;
 		Player* p1 = new Player;
-
-		//setPosition({ 375,350,400,400 });
-//setPosition({ 175,150,200,200 });
-
 
 		//p0->setPosition({ 375,3500,400,3550 });
 		//p1->setPosition({ 175,3500,200,3550 });
@@ -94,6 +91,7 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 
 Scene::~Scene()
 {
+	m_iTileImage.Destroy();
 	m_imgBackGround.Destroy();
 	Safe_Delete_VecList(m_listPlayer);
 	Safe_Delete_VecList(m_listTiles);
@@ -191,6 +189,7 @@ void Scene::init()
 
 void Scene::input(float fDeltaTime)
 {
+	// player Move
 	for (auto const& d : m_listPlayer) d->input(fDeltaTime);
 
 	// camera
@@ -233,15 +232,35 @@ void Scene::render(HDC hdc)
 	if (hBitmap == NULL) hBitmap = CreateCompatibleBitmap(hdc, m_iTileXLen * TILESIZE, m_iTileYLen * TILESIZE);
 
 	SIZE wndSize = Core::GetInst()->GetSize();
+	SIZE imgSize = { m_imgBackGround.GetWidth(), m_imgBackGround.GetHeight() };
 
 	SelectObject(memdc, hBitmap);
 
 	// draw bg
-	m_imgBackGround.StretchBlt(memdc, { 0,0,wndSize.cx ,wndSize.cy }, SRCCOPY);
+	RECT imgRect = { 
+	((m_CameraOffset.x * wndSize.cx) / (m_iTileXLen * TILESIZE)),
+	((m_CameraOffset.y * wndSize.cy) / (m_iTileYLen * TILESIZE)),
+	((m_CameraOffset.x * wndSize.cx) / (m_iTileXLen * TILESIZE)) + ((imgSize.cx * wndSize.cx) / (m_iTileXLen * TILESIZE)),
+	((m_CameraOffset.y * wndSize.cy) / (m_iTileYLen * TILESIZE)) + ((imgSize.cy * wndSize.cy) / (m_iTileYLen * TILESIZE)) };
+					 
+
+	
+	
+	//m_imgBackGround.StretchBlt(memdc, { 0,0,m_iTileXLen * TILESIZE, m_iTileYLen * TILESIZE },  SRCCOPY);
+	printf("%4d %4d %4d %4d\n", imgRect.left, imgRect.top, imgRect.right, imgRect.bottom);
+	//m_imgBackGround.StretchBlt(memdc, 0, 0, m_iTileXLen * TILESIZE, m_iTileYLen * TILESIZE,
+	//	imgRect.left, imgRect.top, imgRect.right - imgRect.left, imgRect.bottom - imgRect.top, SRCCOPY);
+
+	//m_imgBackGround.StretchBlt(memdc, { static_cast<int>(m_CameraOffset.x), static_cast<int>(m_CameraOffset.y),
+	//		static_cast<int>(m_CameraOffset.x) + wndSize.cx, static_cast<int>(m_CameraOffset.y) + wndSize.cy },imgRect, SRCCOPY);
+
+	m_imgBackGround.BitBlt(memdc, { static_cast<int>(m_CameraOffset.x), static_cast<int>(m_CameraOffset.y),
+		static_cast<int>(m_CameraOffset.x) + wndSize.cx, static_cast<int>(m_CameraOffset.y) + wndSize.cy },
+		{ imgRect.right, imgRect.bottom }, SRCCOPY);
 
 	//if End Scene return
 	if (m_iSceneNum == 999) {
-		BitBlt(hdc, 0, 0, Core::GetInst()->GetSize().cx, Core::GetInst()->GetSize().cy, memdc, m_CameraOffset.x, m_CameraOffset.y, SRCCOPY);
+		BitBlt(hdc, 0, 0, wndSize.cx, wndSize.cy, memdc, m_CameraOffset.x, m_CameraOffset.y, SRCCOPY);
 
 		DeleteObject(hBitmap);
 		DeleteDC(memdc);
@@ -258,8 +277,21 @@ void Scene::render(HDC hdc)
 	for (int i = y; i < y + 20; ++i) {
 		for (int j = x; j < x + 34; ++j) {
 
-			if (m_listTiles[m_iTileXLen * i + j]->getTile() == TILE_DATA::TD_BLOCK) 
-				Rectangle(memdc, j * 40, i * 40, j * 40 + 40, i * 40 + 40);
+			if (m_listTiles[m_iTileXLen * i + j]->getTile() == TILE_DATA::TD_BLOCK) {
+				RECT temp = { j * TILESIZE, i * TILESIZE, (j + 1) * TILESIZE, (i + 1) * TILESIZE };
+
+				m_iTileImage.TransparentBlt(memdc, j * TILESIZE, i * TILESIZE, TILESIZE, TILESIZE,
+					72 * 5, 0, 70, 70, RGB(80, 40, 0));
+
+				//FrameRect(memdc, &temp, (HBRUSH)GetStockObject(BLACK_BRUSH));
+			} else if (m_listTiles[m_iTileXLen * i + j]->getTile() == TILE_DATA::TD_FLOOR) {
+				RECT temp = { j * TILESIZE, i * TILESIZE, (j + 1) * TILESIZE, (i + 1) * TILESIZE };
+
+				m_iTileImage.TransparentBlt(memdc, j * TILESIZE, i * TILESIZE, TILESIZE, TILESIZE,
+					72 * 4, 0, 70, 70, RGB(80, 40, 0));
+
+				//FrameRect(memdc, &temp, (HBRUSH)GetStockObject(BLACK_BRUSH));
+			}
 		}
 	}
 

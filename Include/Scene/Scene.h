@@ -21,6 +21,7 @@ public:
 private:
 	int m_iSceneNum;
 	CImage m_imgBackGround;
+	CImage m_iTileImage;
 
 	// movingObjs
 	list<class Player* > m_listPlayer;

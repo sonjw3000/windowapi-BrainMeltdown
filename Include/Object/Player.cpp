@@ -169,7 +169,7 @@ void Player::input(float fDeltaTime)
 		m_bBeforeSit = false;
 	}
 	else {
-		m_iImageSprite = m_iMaxImageSprite + m_bSitComplete - m_iPlayerNum;
+		m_iImageSprite = m_iMaxImageSprite + m_bSitComplete - (m_iPlayerNum * m_bSitComplete);
 		m_fCnt = 0;
 
 		m_bBeforeSit = false;

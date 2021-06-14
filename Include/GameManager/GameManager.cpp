@@ -90,7 +90,9 @@ void GameManager::collision()
 		
 		// º®?
 		if (m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_BLOCK ||
-			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_BLOCK) 
+			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_BLOCK || 
+			m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_FLOOR ||
+			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_FLOOR)
 			dPlayer->goBackX();
 
 	}
