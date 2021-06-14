@@ -47,8 +47,7 @@ void Monster::render(HDC hdc)
 {
     RECT t = (RECT)getPosition();
 
-    FrameRect(hdc, &t, (HBRUSH)GetStockObject(WHITE_BRUSH));
-    //Rectangle(hdc, rt.left, rt.top, rt.right, rt.bottom);
+    //FrameRect(hdc, &t, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
     m_tImg.TransparentBlt(hdc, t.left, t.top, t.right - t.left, t.bottom - t.top,
         m_iImageSprite * 72, 72 * ((1 - static_cast<int>(m_eMoveDir)) >> 1), 70, 70, RGB(80, 40, 0));

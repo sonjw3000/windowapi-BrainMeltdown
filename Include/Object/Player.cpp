@@ -21,11 +21,11 @@ bool Player::init()
 	setSpeed(250);
 
 	if (m_iPlayerNum == 0) {
-		setPosition({ 375,350,400,400 });
+		//setPosition({ 375,350,400,400 });
 		m_tImg.Load(L"Resource/player1.png");
 	}
 	else {
-		setPosition({ 175,150,200,200 });
+		//setPosition({ 175,150,200,200 });
 		m_tImg.Load(L"Resource/player2.bmp");
 
 	}
@@ -192,7 +192,7 @@ void Player::render(HDC hdc)
 	RECT t = { m_tPosition.left, m_tPosition.top, m_tPosition.right, m_tPosition.bottom };
 
 #ifdef DEBUG
-	FrameRect(hdc,&t, (HBRUSH)GetStockObject(BLACK_BRUSH));
+	//FrameRect(hdc,&t, (HBRUSH)GetStockObject(BLACK_BRUSH));
 #endif // DEBUG
 
 

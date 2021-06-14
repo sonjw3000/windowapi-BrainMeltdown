@@ -1,6 +1,6 @@
 #include "Core.h"
 #include "GameManager/GameManager.h"
-
+#include <time.h>
 Core* Core::m_pInst = NULL;
 
 
@@ -81,14 +81,33 @@ int Core::Run()
 
 			m_fDeltaTime = (tTime.QuadPart - m_Time.QuadPart) / (float)m_Sec.QuadPart;
 
+			printf("delta : %f ", m_fDeltaTime);
+
 			m_fTimeCnt += m_fDeltaTime;
 
 			m_Time = tTime;
 
+			time_t start, end;
+
+			start = clock();
 			GameManager::GetInst()->input(m_fDeltaTime);
+			end = clock();
+			printf("input : %d ", end - start);
+
+			start = clock();
 			GameManager::GetInst()->update(m_fDeltaTime);
+			end = clock();
+			printf("update : %d ", end - start);
+
+			start = clock();
 			GameManager::GetInst()->collision();
+			end = clock();
+			printf("colision : %d ", end - start);
+
+			start = clock();
 			GameManager::GetInst()->render(hdc);
+			end = clock();
+			printf("render : %d\n", end - start);
 		}
 	}
 

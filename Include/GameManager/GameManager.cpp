@@ -29,6 +29,7 @@ void GameManager::sceneChange(int iSceneNum)
 
 void GameManager::init()
 {
+	// test scene == -1
 	m_iCurSceneNum = -1;
 	m_pScene = new Scene(m_iCurSceneNum);
 
@@ -43,11 +44,13 @@ void GameManager::input(float fDeltaTime)
 
 void GameManager::update(float fDeltaTime)
 {
-	m_pScene->update(fDeltaTime);
+	if (m_pScene->m_iSceneNum != 999) m_pScene->update(fDeltaTime);
 }
 
 void GameManager::collision()
 {
+	if (m_pScene->m_iSceneNum == 999) return;
+
 	RECT camRect = { m_pScene->m_CameraOffset.x,m_pScene->m_CameraOffset.y,m_pScene->m_CameraOffset.x + 1280, m_pScene->m_CameraOffset.y + 720 };
 	// 플레이어와 몬스터 충돌 확인
 	bool bCollide = false;

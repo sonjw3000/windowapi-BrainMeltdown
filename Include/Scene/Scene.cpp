@@ -60,23 +60,34 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 		Player* p0 = new Player;
 		Player* p1 = new Player;
 
+		//setPosition({ 375,350,400,400 });
+//setPosition({ 175,150,200,200 });
+
+
+		//p0->setPosition({ 375,3500,400,3550 });
+		//p1->setPosition({ 175,3500,200,3550 });
+
+		p0->setPosition({ 375,350,400,400 });
+		p1->setPosition({ 175,150,200,200 });
+
+
 		m_listPlayer.push_back(p0);
 		m_listPlayer.push_back(p1);
 
 
 		//fp = fopen("Scene/01_TestScene.txt", "r");
 		fp = fopen("Scene/r.txt", "r");
+		loadFile(fp);
 	}
 		break;
 
 	case 999:				// game over;
-		m_iTileYLen = 0;
-		m_iTileXLen = 0;
+		m_iTileYLen = 18;
+		m_iTileXLen = 32;
 		m_imgBackGround.Load(TEXT("Resource/gameovertemp.png"));
 		break;
 	}
 
-	loadFile(fp);
 
 
 }
@@ -217,13 +228,26 @@ void Scene::render(HDC hdc)
 {
 	hdc = GetDC(Core::GetInst()->GethWnd());
 	HDC memdc = CreateCompatibleDC(hdc);
-	HBITMAP hBitmap = CreateCompatibleBitmap(hdc, m_iTileXLen * TILESIZE, m_iTileYLen * TILESIZE);
+	static HBITMAP hBitmap = CreateCompatibleBitmap(hdc, m_iTileXLen * TILESIZE, m_iTileYLen * TILESIZE);
+
+	if (hBitmap == NULL) hBitmap = CreateCompatibleBitmap(hdc, m_iTileXLen * TILESIZE, m_iTileYLen * TILESIZE);
+
+	SIZE wndSize = Core::GetInst()->GetSize();
 
 	SelectObject(memdc, hBitmap);
 
 	// draw bg
-	//Rectangle(memdc, -1, -1, Core::GetInst()->GetSize().cx + 1, Core::GetInst()->GetSize().cy + 1);
-	m_imgBackGround.StretchBlt(memdc, { 0,0,Core::GetInst()->GetSize().cx ,Core::GetInst()->GetSize().cy }, SRCCOPY);
+	m_imgBackGround.StretchBlt(memdc, { 0,0,wndSize.cx ,wndSize.cy }, SRCCOPY);
+
+	//if End Scene return
+	if (m_iSceneNum == 999) {
+		BitBlt(hdc, 0, 0, Core::GetInst()->GetSize().cx, Core::GetInst()->GetSize().cy, memdc, m_CameraOffset.x, m_CameraOffset.y, SRCCOPY);
+
+		DeleteObject(hBitmap);
+		DeleteDC(memdc);
+		ReleaseDC(Core::GetInst()->GethWnd(), hdc);
+		return;
+	}
 
 	// draw Tiles
 	int x = m_CameraOffset.x / 40 - 1;
@@ -252,9 +276,9 @@ void Scene::render(HDC hdc)
 	for (auto const d : m_listPlayer) d->render(memdc);
 
 
-	BitBlt(hdc, 0, 0, Core::GetInst()->GetSize().cx, Core::GetInst()->GetSize().cy, memdc, m_CameraOffset.x, m_CameraOffset.y, SRCCOPY);
+	BitBlt(hdc, 0, 0, wndSize.cx, wndSize.cy, memdc, m_CameraOffset.x, m_CameraOffset.y, SRCCOPY);
 
-	DeleteObject(hBitmap);
+	//DeleteObject(hBitmap);
 	DeleteDC(memdc);
 	ReleaseDC(Core::GetInst()->GethWnd(), hdc);
 
