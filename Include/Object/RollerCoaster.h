@@ -8,6 +8,8 @@ private:
 	int m_iGroup;
 	int m_ibuttonAliveCnt;
 
+	BOOL const m_bAlways;
+
 	STEP_FOR m_eType;
 	MOVE_DIR m_eDir;
 

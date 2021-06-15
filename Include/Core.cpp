@@ -12,11 +12,17 @@ Core::Core()
 
 Core::~Core()
 {
-
+	FMOD_System_Close(m_pSoundSystem);
+	FMOD_System_Release(m_pSoundSystem);
 }
 
 bool Core::Init(HINSTANCE hInst)
 {
+	// fmod system init
+	FMOD_System_Create(&m_pSoundSystem);
+	FMOD_System_Init(m_pSoundSystem, 32, FMOD_INIT_NORMAL, NULL);
+
+	// window init
 	this->m_hInst = hInst;
 
 	m_tWndSize.cx = 1280;
@@ -55,19 +61,20 @@ int Core::Run()
 {
 	MSG Message;
 
-	//while (GetMessage(&Message, NULL, 0, 0)) {
-	//	TranslateMessage(&Message);
-	//	DispatchMessage(&Message);
-
-	//	if (!getGameLoop()) break;
-	//}
-
 	HDC hdc = NULL;
 
 	QueryPerformanceFrequency(&m_Sec);
 	QueryPerformanceCounter(&m_Time);
 
 	GameManager::GetInst()->init();
+
+	FMOD_SOUND* pBGSound;
+	FMOD_CHANNEL* pChannel;
+
+	// bg sound
+	FMOD_System_CreateSound(m_pSoundSystem, "Sounds/bgMusic.mp3", FMOD_LOOP_NORMAL, 0, &pBGSound);
+	FMOD_System_PlaySound(m_pSoundSystem, pBGSound, NULL, 0, &pChannel);
+	FMOD_Channel_SetVolume(pChannel, 0.1);
 
 	while (getGameLoop()) {
 		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE)) {
@@ -101,6 +108,10 @@ int Core::Run()
 	}
 
 	GameManager::DestroyInst();
+
+	FMOD_Channel_Stop(pChannel);
+	FMOD_Sound_Release(pBGSound);
+
 
 	return Message.wParam;
 }

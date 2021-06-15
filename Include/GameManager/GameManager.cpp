@@ -25,6 +25,8 @@ void GameManager::sceneChange(int iSceneNum)
 	m_iCurSceneNum = iSceneNum;
 	SAFE_DELETE(m_pScene);
 	m_pScene = new Scene(m_iCurSceneNum);
+	
+	m_pScene->init();
 }
 
 void GameManager::init()
@@ -54,15 +56,15 @@ void GameManager::collision()
 	RECT camRect = { m_pScene->m_CameraOffset.x,m_pScene->m_CameraOffset.y,m_pScene->m_CameraOffset.x + 1280, m_pScene->m_CameraOffset.y + 720 };
 	// 플레이어와 몬스터 충돌 확인
 	bool bCollide = false;
-	for (auto const dPlayer : m_pScene->m_listPlayer) {
-		for (auto const dMonster : m_pScene->m_listMonster) {
-			if (!dMonster->getPosition().IntersectRect(camRect)) continue;
-			if (CollideCheck(dPlayer->getPosition(), dMonster->getPosition())) {
-				m_pScene->resetPlayerPos();
-				return;
-			}
-		}
-	}
+	//for (auto const dPlayer : m_pScene->m_listPlayer) {
+	//	for (auto const dMonster : m_pScene->m_listMonster) {
+	//		if (!dMonster->getPosition().IntersectRect(camRect)) continue;
+	//		if (CollideCheck(dPlayer->getPosition(), dMonster->getPosition())) {
+	//			sceneChange(m_iCurSceneNum);
+	//			return;
+	//		}
+	//	}
+	//}
 
 	// 플레이어와 타일맵 충돌 확인
 	for (auto& dPlayer : m_pScene->m_listPlayer) {
@@ -77,16 +79,21 @@ void GameManager::collision()
 
 		if (leftBottom == TILE_DATA::TD_BLOCK || rightBottom == TILE_DATA::TD_BLOCK ||
 			leftBottom == TILE_DATA::TD_FLOOR || rightBottom == TILE_DATA::TD_FLOOR) {
-			dPlayer->Move(0,  40 * tLeft.y - temp.bottom);
+			dPlayer->Move(0, 40 * tLeft.y - temp.bottom);
 			//printf("%f", temp.bottom - 40 * tLeft.y);
 			dPlayer->notFalling();
-			
+
 		}
 		else if (leftBottom == TILE_DATA::TD_SPIKE || rightBottom == TILE_DATA::TD_SPIKE) {
 			// gameOver;
 			m_pScene->resetPlayerPos();
+			sceneChange(m_iCurSceneNum);
 			//sceneChange(999);
 			//Core::GetInst()->setGameLoopFalse();
+			return;
+		}
+		else if (leftBottom == TILE_DATA::TD_GOAL || rightBottom == TILE_DATA::TD_GOAL) {
+			sceneChange(999);
 			return;
 		}
 		else dPlayer->goFalling();						// NON
@@ -97,6 +104,11 @@ void GameManager::collision()
 			m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_FLOOR ||
 			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_FLOOR)
 			dPlayer->goBackX();
+		else if (m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_GOAL ||
+			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_GOAL) {
+			sceneChange(999);
+			return;
+		}
 
 	}
 

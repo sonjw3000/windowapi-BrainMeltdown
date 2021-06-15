@@ -44,6 +44,11 @@ private:
 	int m_iMaxImageSprite = 4;
 	
 private:
+	static FMOD_SOUND* m_pWalkSound;
+	FMOD_CHANNEL* m_pPlayerChannel;
+
+private:
+	bool m_bWalking = false;
 
 public:
 	void updateSprite() { m_iImageSprite++; m_iImageSprite %= m_iMaxImageSprite; }

@@ -1,7 +1,9 @@
 #include "Player.h"
 #include "Object.h"
+#include "../Core.h"
 
 int Player::m_iPlayerCnt = 0;
+FMOD_SOUND* Player::m_pWalkSound = NULL;
 
 Player::Player() : m_iPlayerNum(m_iPlayerCnt++)
 {
@@ -9,6 +11,7 @@ Player::Player() : m_iPlayerNum(m_iPlayerCnt++)
 
 Player::~Player()
 {
+	FMOD_Channel_Stop(m_pPlayerChannel);
 	m_iPlayerCnt--;
 }
 
@@ -31,6 +34,11 @@ bool Player::init()
 	}
 
 	m_iSpriteY = m_eMoveDir == MOVE_DIR::MD_BACK;
+
+
+	if (m_pWalkSound == NULL) 
+		FMOD_System_CreateSound(Core::GetInst()->getFmodSystem(), "Sounds/walkingSound.mp3", FMOD_LOOP_NORMAL, 0, &m_pWalkSound);
+
 	return true;
 }
 
@@ -59,7 +67,7 @@ void Player::input(float fDeltaTime)
 		if (!m_bFalling) {
 			if (GetAsyncKeyState(VK_UP) & 0x8000) {
 				m_bFalling = true;
-				m_fJumpSpeed = -600;
+				m_fJumpSpeed = -550;
 			}
 			if (GetAsyncKeyState(VK_DOWN) & 0x8000 && !m_bLand) {
 				m_bSit = true;
@@ -84,7 +92,7 @@ void Player::input(float fDeltaTime)
 		if (!m_bFalling) {
 			if (GetAsyncKeyState('W') & 0x8000) {
 				m_bFalling = true;
-				m_fJumpSpeed = -500;
+				m_fJumpSpeed = -550;
 			}
 			if (GetAsyncKeyState('S') & 0x8000 && !m_bLand) {
 				m_bSit = true;
@@ -167,6 +175,12 @@ void Player::input(float fDeltaTime)
 		m_iImageSprite %= m_iMaxImageSprite + m_bSitComplete - m_iPlayerNum;
 		
 		m_bBeforeSit = false;
+		if (!m_bWalking) {
+			FMOD_System_PlaySound(Core::GetInst()->getFmodSystem(), m_pWalkSound, NULL, 0, &m_pPlayerChannel);
+			FMOD_Channel_SetVolume(m_pPlayerChannel, 0.8);
+			m_bWalking = true;
+		}
+
 	}
 	else {
 		m_iImageSprite = m_iMaxImageSprite + m_bSitComplete - (m_iPlayerNum * m_bSitComplete);
@@ -176,7 +190,11 @@ void Player::input(float fDeltaTime)
 	}
 
 
-
+	if (!bMoved || m_bFalling) {
+		FMOD_Channel_Stop(m_pPlayerChannel);
+		m_bWalking = false;
+	}
+	
 }
 
 int Player::update(float fDeltaTime)

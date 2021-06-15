@@ -3,7 +3,7 @@
 CImage RollerCoaster::m_tRCImg;
 
 RollerCoaster::RollerCoaster(RECT pos, STEP_FOR t, int b, int g, RECT mt) 
-	: m_tInitpos(pos), m_eType(t), m_ibuttonAliveCnt(0), m_iGroup(g), m_tMoveTo(mt)
+	: m_tInitpos(pos), m_eType(t), m_ibuttonAliveCnt(0), m_iGroup(g), m_tMoveTo(mt), m_bAlways(b)
 { 
 	
 	if (m_tRCImg.IsNull()) m_tRCImg.Load(L"Resource/imgsp.bmp");
@@ -32,7 +32,7 @@ void RollerCoaster::input(float fDeltaTime)
 int RollerCoaster::update(float fDeltaTime)
 {
 	//printf("%d\n", m_ibuttonAliveCnt);
-	if (!m_ibuttonAliveCnt) return 1;
+	if (!(m_ibuttonAliveCnt + m_bAlways)) return 1;
 	// move deltatime * speed
 	if (-5 < static_cast<int>(m_eDir) && static_cast<int>(m_eDir) < 5) Move(fDeltaTime * getSpeed() * static_cast<int>(m_eDir), 0);
 	else Move(0, fDeltaTime * getSpeed() * static_cast<int>(m_eDir) / 10);
@@ -94,5 +94,5 @@ void RollerCoaster::render(HDC hdc)
 	default:					t = 1;	break;
 	}
 
-	m_tRCImg.TransparentBlt(hdc, temp, { t * 72, 0,  t * 72 + 70, 29 }, RGB(80, 40, 0));
+	m_tRCImg.TransparentBlt(hdc, temp, { t * 72, 0,  t * 72 + 70, 28 }, RGB(80, 40, 0));
 }

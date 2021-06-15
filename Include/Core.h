@@ -36,6 +36,12 @@ private:
 	bool m_bShowGrid = false;
 	bool m_bGameLoop = true;
 
+private:
+	FMOD_SYSTEM* m_pSoundSystem;
+
+public:
+	FMOD_SYSTEM* getFmodSystem() { return m_pSoundSystem; }
+
 public:
 	SIZE GetSize() const { return m_tWndSize; }
 	HWND GethWnd() const { return m_hWnd; }

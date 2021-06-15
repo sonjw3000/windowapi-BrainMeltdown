@@ -5,7 +5,7 @@
 #include <list>
 #include <string>
 #include <atlimage.h>
-
+#include <fmod.h>
 
 #ifdef _DEBUG
 #include <crtdbg.h>

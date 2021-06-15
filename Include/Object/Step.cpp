@@ -54,6 +54,6 @@ void Step::render(HDC hdc)
 	default:					t = 1;	break;
 	}
 
-	m_tStepImg.TransparentBlt(hdc, temp, { t * 72, 0,  t * 72 + 70, 29 }, RGB(80, 40, 0));
+	m_tStepImg.TransparentBlt(hdc, temp, { t * 72, 0,  t * 72 + 70, 28 }, RGB(80, 40, 0));
 
 }
