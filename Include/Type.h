@@ -102,7 +102,10 @@ enum class TILE_DATA {
 	TD_NON = 0,			// 아무것도 아님
 	TD_BLOCK,			// 지나갈수 없음
 	TD_FLOOR,			// 바닥
-	TD_SPIKE			// 닿으면 죽음
+	TD_SPIKE,			// 닿으면 죽음
+
+	TD_GOAL = 9
+
 };
 
 // Who can use this step

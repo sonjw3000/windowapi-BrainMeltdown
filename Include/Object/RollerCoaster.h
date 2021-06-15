@@ -11,9 +11,12 @@ private:
 	STEP_FOR m_eType;
 	MOVE_DIR m_eDir;
 
+private:
+	static CImage m_tRCImg;
+
 public:
 	RollerCoaster() = delete;
-	RollerCoaster(RECT pos, STEP_FOR t, BOOL b, int g, RECT mt);
+	RollerCoaster(RECT pos, STEP_FOR t, int b, int g, RECT mt);
 	~RollerCoaster();
 
 public:

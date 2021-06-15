@@ -48,8 +48,17 @@ private:
 	//RECT m_rtCamera;
 
 private:
+	RECT m_p0StartPos;
+	RECT m_p1StartPos;
+
+private:
+	HBITMAP hBitmap = NULL;
+
+private:
 	bool loadFile(FILE* fp);
 
+public:
+	void resetPlayerPos();
 
 public:
 	void init();

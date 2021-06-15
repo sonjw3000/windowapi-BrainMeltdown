@@ -8,6 +8,10 @@ private:
 	STEP_FOR m_eType;
 	bool m_bAlive = true;
 	int m_ibuttonAliveCnt = m_bAlive;
+
+private:
+	static CImage m_tStepImg;
+
 public:
 	Step() = delete;
 	Step(STEP_FOR sf, RECT pos) : m_eType(sf) { setPosition(pos); }

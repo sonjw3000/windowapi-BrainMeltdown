@@ -59,7 +59,7 @@ void Player::input(float fDeltaTime)
 		if (!m_bFalling) {
 			if (GetAsyncKeyState(VK_UP) & 0x8000) {
 				m_bFalling = true;
-				m_fJumpSpeed = -500;
+				m_fJumpSpeed = -600;
 			}
 			if (GetAsyncKeyState(VK_DOWN) & 0x8000 && !m_bLand) {
 				m_bSit = true;

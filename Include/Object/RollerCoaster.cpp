@@ -1,8 +1,13 @@
 #include "RollerCoaster.h"
 
+CImage RollerCoaster::m_tRCImg;
+
 RollerCoaster::RollerCoaster(RECT pos, STEP_FOR t, int b, int g, RECT mt) 
 	: m_tInitpos(pos), m_eType(t), m_ibuttonAliveCnt(0), m_iGroup(g), m_tMoveTo(mt)
 { 
+	
+	if (m_tRCImg.IsNull()) m_tRCImg.Load(L"Resource/imgsp.bmp");
+	
 	setPosition(pos);
 
 	if (m_tInitpos.left != m_tMoveTo.left) m_eDir = m_tInitpos.left > m_tMoveTo.left ? MOVE_DIR::MD_BACK : MOVE_DIR::MD_FRONT;
@@ -11,6 +16,7 @@ RollerCoaster::RollerCoaster(RECT pos, STEP_FOR t, int b, int g, RECT mt)
 
 RollerCoaster::~RollerCoaster()
 {
+	m_tRCImg.Destroy();
 }
 
 bool RollerCoaster::init()
@@ -63,20 +69,30 @@ void RollerCoaster::render(HDC hdc)
 	RECT temp = (RECT)getPosition();
 
 #ifdef DEBUG
-	HBRUSH hBrush = NULL, oBrush;
+	//HBRUSH hBrush = NULL, oBrush;
 
-	switch (m_eType) {
-	case STEP_FOR::SF_ALL:		hBrush = CreateSolidBrush(RGB(150, 75, 0));		break;
-	case STEP_FOR::SF_PUR:		hBrush = CreateSolidBrush(RGB(139, 75, 255));	break;
-	case STEP_FOR::SF_YELLOW:	hBrush = CreateSolidBrush(RGB(255, 255, 0));	break;
-	default:					hBrush = CreateSolidBrush(RGB(255, 255, 255));	break;
-	}
-	oBrush = (HBRUSH)SelectObject(hdc, hBrush);
+	//switch (m_eType) {
+	//case STEP_FOR::SF_ALL:		hBrush = CreateSolidBrush(RGB(150, 75, 0));		break;
+	//case STEP_FOR::SF_PUR:		hBrush = CreateSolidBrush(RGB(139, 75, 255));	break;
+	//case STEP_FOR::SF_YELLOW:	hBrush = CreateSolidBrush(RGB(255, 255, 0));	break;
+	//default:					hBrush = CreateSolidBrush(RGB(255, 255, 255));	break;
+	//}
+	//oBrush = (HBRUSH)SelectObject(hdc, hBrush);
 
-	Rectangle(hdc, temp.left, temp.top, temp.right, temp.bottom);
+	//Rectangle(hdc, temp.left, temp.top, temp.right, temp.bottom);
 
-	SelectObject(hdc, oBrush);
-	DeleteObject(hBrush);	
+	//SelectObject(hdc, oBrush);
+	//DeleteObject(hBrush);	
 
 #endif // DEBUG
+	int t = 0;
+
+	switch (m_eType) {
+	case STEP_FOR::SF_ALL:		t = 1;	break;
+	case STEP_FOR::SF_PUR:		t = 3;	break;
+	case STEP_FOR::SF_YELLOW:	t = 2;	break;
+	default:					t = 1;	break;
+	}
+
+	m_tRCImg.TransparentBlt(hdc, temp, { t * 72, 0,  t * 72 + 70, 29 }, RGB(80, 40, 0));
 }

@@ -30,7 +30,7 @@ void GameManager::sceneChange(int iSceneNum)
 void GameManager::init()
 {
 	// test scene == -1
-	m_iCurSceneNum = -1;
+	m_iCurSceneNum = 1;
 	m_pScene = new Scene(m_iCurSceneNum);
 
 	m_pScene->init();
@@ -55,11 +55,13 @@ void GameManager::collision()
 	// 플레이어와 몬스터 충돌 확인
 	bool bCollide = false;
 	for (auto const dPlayer : m_pScene->m_listPlayer) {
-		//for (auto const dMonster : m_pScene->m_lsitMonster) {
-		//  if (!dMonster->getPosition().IntersectRect(camRect)) continue;
-		//	if (CollideCheck(dPlayer->getPosition(), dMonster->getPosition())) bCollide = true;
-		//}
-		//if (bCollide) break;
+		for (auto const dMonster : m_pScene->m_listMonster) {
+			if (!dMonster->getPosition().IntersectRect(camRect)) continue;
+			if (CollideCheck(dPlayer->getPosition(), dMonster->getPosition())) {
+				m_pScene->resetPlayerPos();
+				return;
+			}
+		}
 	}
 
 	// 플레이어와 타일맵 충돌 확인
@@ -78,11 +80,12 @@ void GameManager::collision()
 			dPlayer->Move(0,  40 * tLeft.y - temp.bottom);
 			//printf("%f", temp.bottom - 40 * tLeft.y);
 			dPlayer->notFalling();
-			bCollide = true;
+			
 		}
 		else if (leftBottom == TILE_DATA::TD_SPIKE || rightBottom == TILE_DATA::TD_SPIKE) {
 			// gameOver;
-			sceneChange(999);
+			m_pScene->resetPlayerPos();
+			//sceneChange(999);
 			//Core::GetInst()->setGameLoopFalse();
 			return;
 		}

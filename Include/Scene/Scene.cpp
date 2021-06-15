@@ -53,7 +53,7 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 	}
 	break;
 
-	case -1:				// test mapTool
+	case 1:				// test mapTool
 	{
 		m_imgBackGround.Load(TEXT("Resource/tempBGv2.bmp"));
 		m_iTileImage.Load(TEXT("Resource/tempsprite.bmp"));
@@ -64,16 +64,18 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 		//p0->setPosition({ 375,3500,400,3550 });
 		//p1->setPosition({ 175,3500,200,3550 });
 
-		p0->setPosition({ 375,350,400,400 });
-		p1->setPosition({ 175,150,200,200 });
+		m_p0StartPos = { 375,1150,400,1200 };
+		m_p1StartPos = { 175,1150,200,1200 };
+
+		p0->setPosition(m_p0StartPos);
+		p1->setPosition(m_p1StartPos);
 
 
 		m_listPlayer.push_back(p0);
 		m_listPlayer.push_back(p1);
 
 
-		//fp = fopen("Scene/01_TestScene.txt", "r");
-		fp = fopen("Scene/r.txt", "r");
+		fp = fopen("Scene/final.txt", "r");
 		loadFile(fp);
 	}
 		break;
@@ -91,6 +93,7 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 
 Scene::~Scene()
 {
+	DeleteObject(hBitmap);
 	m_iTileImage.Destroy();
 	m_imgBackGround.Destroy();
 	Safe_Delete_VecList(m_listPlayer);
@@ -180,11 +183,18 @@ bool Scene::loadFile(FILE* fp)
 	return true;
 }
 
+void Scene::resetPlayerPos()
+{
+	m_listPlayer.front()->setPosition(m_p0StartPos);
+	m_listPlayer.back()->setPosition(m_p1StartPos);
+}
+
 void Scene::init()
 {
 	// player init
 	for (auto const& d : m_listPlayer) d->init();
 	for (auto& d : m_listMonster) d->init();
+	for (auto& d : m_listStep) d->init();
 }
 
 void Scene::input(float fDeltaTime)
@@ -227,8 +237,6 @@ void Scene::render(HDC hdc)
 {
 	hdc = GetDC(Core::GetInst()->GethWnd());
 	HDC memdc = CreateCompatibleDC(hdc);
-	static HBITMAP hBitmap = CreateCompatibleBitmap(hdc, m_iTileXLen * TILESIZE, m_iTileYLen * TILESIZE);
-
 	if (hBitmap == NULL) hBitmap = CreateCompatibleBitmap(hdc, m_iTileXLen * TILESIZE, m_iTileYLen * TILESIZE);
 
 	SIZE wndSize = Core::GetInst()->GetSize();
@@ -240,8 +248,8 @@ void Scene::render(HDC hdc)
 	RECT imgRect = { 
 	((m_CameraOffset.x * wndSize.cx) / (m_iTileXLen * TILESIZE)),
 	((m_CameraOffset.y * wndSize.cy) / (m_iTileYLen * TILESIZE)),
-	((m_CameraOffset.x * wndSize.cx) / (m_iTileXLen * TILESIZE)) + ((imgSize.cx * wndSize.cx) / (m_iTileXLen * TILESIZE)),
-	((m_CameraOffset.y * wndSize.cy) / (m_iTileYLen * TILESIZE)) + ((imgSize.cy * wndSize.cy) / (m_iTileYLen * TILESIZE)) };
+	((m_CameraOffset.x + imgSize.cx) * wndSize.cx) / (m_iTileXLen * TILESIZE),
+	((m_CameraOffset.y + imgSize.cy) * wndSize.cy) / (m_iTileYLen * TILESIZE) };
 					 
 
 	
@@ -256,13 +264,13 @@ void Scene::render(HDC hdc)
 
 	m_imgBackGround.BitBlt(memdc, { static_cast<int>(m_CameraOffset.x), static_cast<int>(m_CameraOffset.y),
 		static_cast<int>(m_CameraOffset.x) + wndSize.cx, static_cast<int>(m_CameraOffset.y) + wndSize.cy },
-		{ imgRect.right, imgRect.bottom }, SRCCOPY);
+		{ imgRect.left, imgRect.top }, SRCCOPY);
 
 	//if End Scene return
 	if (m_iSceneNum == 999) {
 		BitBlt(hdc, 0, 0, wndSize.cx, wndSize.cy, memdc, m_CameraOffset.x, m_CameraOffset.y, SRCCOPY);
 
-		DeleteObject(hBitmap);
+		//DeleteObject(hBitmap);
 		DeleteDC(memdc);
 		ReleaseDC(Core::GetInst()->GethWnd(), hdc);
 		return;

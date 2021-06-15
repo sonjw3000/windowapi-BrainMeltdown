@@ -6,6 +6,9 @@ class Monster : public MovingObject {
 private:
 	MOVE_DIR m_eMoveDir = MOVE_DIR::MD_NONE;
 
+private:
+	static CImage m_tMonsterImg;
+
 public:
 	Monster() = delete;
 	Monster(RECT pos, MOVE_DIR mdr);
