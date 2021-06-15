@@ -1,4 +1,13 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
+  Core.cpp
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(36,15): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(37,14): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(38,16): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(39,17): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Core.cpp(77,38): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Core.cpp(123,14): warning C4101: 'ps' :참조되지 않은 지역 변수입니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Core.cpp(125,10): warning C4101: 'hBitmap' :참조되지 않은 지역 변수입니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Core.cpp(122,18): warning C4101: 'memdc' :참조되지 않은 지역 변수입니다.
   GameManager.cpp
 C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(36,15): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(37,14): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
@@ -34,9 +43,45 @@ C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManag
 C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(185,98): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
 C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(235,101): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
 C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(237,26): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+  Player.cpp
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(36,15): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(37,14): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(38,16): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(39,17): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(149,65): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(180,48): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(210,24): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(210,24): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(210,42): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(210,42): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(210,59): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(210,59): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(210,78): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Object\Player.cpp(210,78): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Scene.cpp
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(36,15): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(37,14): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(38,16): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Type.h(39,17): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(226,118): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(229,118): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(259,35): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(259,35): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(260,35): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(260,35): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(261,49): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(261,49): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(262,49): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(262,49): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(281,84): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(281,66): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(290,8): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(291,8): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(329,83): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\Scene\Scene.cpp(329,65): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   코드를 생성하고 있습니다.
-  2 of 778 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  1 of 778 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
   SAVESAVE.vcxproj -> C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Release\../Bin/Release\MeltDown.exe
