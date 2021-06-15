@@ -64,11 +64,11 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 		//p0->setPosition({ 375,3500,400,3550 });
 		//p1->setPosition({ 175,3500,200,3550 });
 
-		//m_p0StartPos = { 375,1150,400,1200 };
-		//m_p1StartPos = { 175,1150,200,1200 };
+		m_p0StartPos = { 375,1150,400,1200 };
+		m_p1StartPos = { 175,1150,200,1200 };
 
-		m_p0StartPos = { 520,0,545,50 };
-		m_p1StartPos = { 550,0,575,50 };
+		//m_p0StartPos = { 520,0,545,50 };
+		//m_p1StartPos = { 550,0,575,50 };
 
 		p0->setPosition(m_p0StartPos);
 		p1->setPosition(m_p1StartPos);

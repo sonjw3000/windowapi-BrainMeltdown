@@ -56,15 +56,15 @@ void GameManager::collision()
 	RECT camRect = { m_pScene->m_CameraOffset.x,m_pScene->m_CameraOffset.y,m_pScene->m_CameraOffset.x + 1280, m_pScene->m_CameraOffset.y + 720 };
 	// 플레이어와 몬스터 충돌 확인
 	bool bCollide = false;
-	//for (auto const dPlayer : m_pScene->m_listPlayer) {
-	//	for (auto const dMonster : m_pScene->m_listMonster) {
-	//		if (!dMonster->getPosition().IntersectRect(camRect)) continue;
-	//		if (CollideCheck(dPlayer->getPosition(), dMonster->getPosition())) {
-	//			sceneChange(m_iCurSceneNum);
-	//			return;
-	//		}
-	//	}
-	//}
+	for (auto const dPlayer : m_pScene->m_listPlayer) {
+		for (auto const dMonster : m_pScene->m_listMonster) {
+			if (!dMonster->getPosition().IntersectRect(camRect)) continue;
+			if (CollideCheck(dPlayer->getPosition(), dMonster->getPosition())) {
+				sceneChange(m_iCurSceneNum);
+				return;
+			}
+		}
+	}
 
 	// 플레이어와 타일맵 충돌 확인
 	for (auto& dPlayer : m_pScene->m_listPlayer) {
