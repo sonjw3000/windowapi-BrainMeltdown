@@ -20,17 +20,23 @@ C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManag
 C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(74,25): warning C4244: '초기화 중': 'double'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(74,53): warning C4838: 'double'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
 C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(74,53): warning C4244: '초기화 중': 'double'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(137,95): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(139,27): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(145,94): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(167,99): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(169,27): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(175,98): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(225,101): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(227,26): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(79,41): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(80,42): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(108,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(109,19): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(115,28): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(116,19): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(147,95): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(149,27): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(155,94): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(177,99): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(179,27): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(185,98): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(235,101): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Include\GameManager\GameManager.cpp(237,26): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
   코드를 생성하고 있습니다.
-  2 of 777 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    10 functions had inline decision re-evaluated but remain unchanged
+  2 of 778 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
   SAVESAVE.vcxproj -> C:\Users\sonjw\Desktop\기말프로젝트\SAVESAVE\Release\../Bin/Release\MeltDown.exe

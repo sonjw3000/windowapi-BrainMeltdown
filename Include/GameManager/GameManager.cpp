@@ -74,8 +74,10 @@ void GameManager::collision()
 		POINT tRight = { floor((temp.right) / 40.0), floor((temp.bottom) / 40.0) };
 
 		// ¹Ù´Ú
-		TILE_DATA leftBottom = m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x]->getTile();
-		TILE_DATA rightBottom = m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x]->getTile();
+		int LB = tLeft.y * m_pScene->m_iTileXLen + tLeft.x;
+		int RB = tRight.y * m_pScene->m_iTileXLen + tRight.x;
+		TILE_DATA leftBottom = (0 <= LB && LB < m_pScene->m_listTiles.size()) ? m_pScene->m_listTiles[LB]->getTile() : TILE_DATA::TD_NON;
+		TILE_DATA rightBottom = (0 <= RB && RB < m_pScene->m_listTiles.size()) ? m_pScene->m_listTiles[RB]->getTile() : TILE_DATA::TD_NON;
 
 		if (leftBottom == TILE_DATA::TD_BLOCK || rightBottom == TILE_DATA::TD_BLOCK ||
 			leftBottom == TILE_DATA::TD_FLOOR || rightBottom == TILE_DATA::TD_FLOOR) {
@@ -99,13 +101,21 @@ void GameManager::collision()
 		else dPlayer->goFalling();						// NON
 		
 		// º®?
-		if (m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_BLOCK ||
-			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_BLOCK || 
-			m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_FLOOR ||
-			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_FLOOR)
+		LB = tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen;
+		RB = tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen;
+
+		
+		if (((0 <= LB && LB < m_pScene->m_listTiles.size()) && 
+			(0 <= RB && RB < m_pScene->m_listTiles.size())) &&
+			m_pScene->m_listTiles[LB]->getTile() == TILE_DATA::TD_BLOCK ||
+			m_pScene->m_listTiles[RB]->getTile() == TILE_DATA::TD_BLOCK ||
+			m_pScene->m_listTiles[LB]->getTile() == TILE_DATA::TD_FLOOR ||
+			m_pScene->m_listTiles[RB]->getTile() == TILE_DATA::TD_FLOOR)
 			dPlayer->goBackX();
-		else if (m_pScene->m_listTiles[tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_GOAL ||
-			m_pScene->m_listTiles[tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen]->getTile() == TILE_DATA::TD_GOAL) {
+		else if (((0 <= LB && LB < m_pScene->m_listTiles.size()) &&
+			(0 <= RB && RB < m_pScene->m_listTiles.size())) &&
+			m_pScene->m_listTiles[LB]->getTile() == TILE_DATA::TD_GOAL ||
+			m_pScene->m_listTiles[RB]->getTile() == TILE_DATA::TD_GOAL) {
 			sceneChange(999);
 			return;
 		}
