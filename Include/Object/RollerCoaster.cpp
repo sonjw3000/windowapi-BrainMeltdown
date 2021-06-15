@@ -39,26 +39,59 @@ int RollerCoaster::update(float fDeltaTime)
 	// if reached pos? speed * -1
 
 	RECT temp = getPosition();
-	if (-5 < static_cast<int>(m_eDir) && static_cast<int>(m_eDir) < 5) {
-		POINT t = { static_cast<int>(m_eDir) == 1 ? m_tMoveTo.right : m_tMoveTo.left, (m_tMoveTo.bottom - m_tMoveTo.top) / 2 + m_tMoveTo.top };
-		if (PtInRect(&temp, t)) {
+
+	int goal;
+	switch (m_eDir) {
+	case MOVE_DIR::MD_BACK:
+		goal = m_tMoveTo.left;
+
+		if (goal > temp.left) {
 			m_eDir = m_eDir * -1;
 
 			temp = m_tMoveTo;
 			m_tMoveTo = m_tInitpos;
 			m_tInitpos = temp;
 		}
-	}
-	else {
-		POINT t = { (m_tMoveTo.right - m_tMoveTo.left) / 2 + m_tMoveTo.left, static_cast<int>(m_eDir) == 10 ? m_tMoveTo.bottom : m_tMoveTo.top };
-		if (PtInRect(&temp, t)) {
+		break;
+
+	case MOVE_DIR::MD_FRONT:
+		goal = m_tMoveTo.right;
+
+		if (goal < temp.right) {
 			m_eDir = m_eDir * -1;
 
 			temp = m_tMoveTo;
 			m_tMoveTo = m_tInitpos;
 			m_tInitpos = temp;
 		}
+		break;
+
+	case MOVE_DIR::MD_UP:
+		goal = m_tMoveTo.top;
+
+		if (goal > temp.top) {
+			m_eDir = m_eDir * -1;
+
+			temp = m_tMoveTo;
+			m_tMoveTo = m_tInitpos;
+			m_tInitpos = temp;
+		}
+		break;
+
+	case MOVE_DIR::MD_DOWN:
+		goal = m_tMoveTo.bottom;
+
+		if (goal < temp.bottom) {
+			m_eDir = m_eDir * -1;
+
+			temp = m_tMoveTo;
+			m_tMoveTo = m_tInitpos;
+			m_tInitpos = temp;
+		}
+		break;
+
 	}
+
 	return 0;
 }
 

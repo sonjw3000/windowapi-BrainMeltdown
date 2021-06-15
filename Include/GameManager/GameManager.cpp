@@ -66,6 +66,7 @@ void GameManager::collision()
 		}
 	}
 
+
 	// 플레이어와 타일맵 충돌 확인
 	for (auto& dPlayer : m_pScene->m_listPlayer) {
 		FRECT temp = dPlayer->getPosition();
@@ -104,10 +105,13 @@ void GameManager::collision()
 		LB = tLeft.y * m_pScene->m_iTileXLen + tLeft.x - m_pScene->m_iTileXLen;
 		RB = tRight.y * m_pScene->m_iTileXLen + tRight.x - m_pScene->m_iTileXLen;
 
+		if (LB < 0 || RB < 0) {
+			dPlayer->goFalling();
+			break;
+		}
+		//else if(LB > )
 		
-		if (((0 <= LB && LB < m_pScene->m_listTiles.size()) && 
-			(0 <= RB && RB < m_pScene->m_listTiles.size())) &&
-			m_pScene->m_listTiles[LB]->getTile() == TILE_DATA::TD_BLOCK ||
+		if (m_pScene->m_listTiles[LB]->getTile() == TILE_DATA::TD_BLOCK ||
 			m_pScene->m_listTiles[RB]->getTile() == TILE_DATA::TD_BLOCK ||
 			m_pScene->m_listTiles[LB]->getTile() == TILE_DATA::TD_FLOOR ||
 			m_pScene->m_listTiles[RB]->getTile() == TILE_DATA::TD_FLOOR)
@@ -193,6 +197,30 @@ void GameManager::collision()
 		}
 	}
 	
+	// 플레이어와 플레이어 충돌 확인
+	int playerCnt = 0;
+	for (auto& dPlayer : m_pScene->m_listPlayer) {
+		bool bCol = false;
+		Player* pOtherPlayer = playerCnt ? m_pScene->m_listPlayer.front() : m_pScene->m_listPlayer.back();
+
+		playerCnt++;
+
+		if (m_pScene->m_listPlayer.front()->getPosition().IntersectRect(m_pScene->m_listPlayer.back()->getPosition())) {
+			if (dPlayer->getPosition().IntersectRect(pOtherPlayer->getPosition())) {
+				if (dPlayer->getPosition().bottom - pOtherPlayer->getPosition().bottom < -20) {
+					while (dPlayer->getPosition().IntersectRect(pOtherPlayer->getPosition())) dPlayer->Move(0, -0.1);
+
+					dPlayer->Move(0, 0.1);
+					dPlayer->notFalling();
+					bCollide = true;
+				}
+				else dPlayer->goBackX();
+			}
+
+		}
+		//else 
+	}
+
 	// button
 	// turn off everything
 	for (auto& d : m_pScene->m_listRollerCoaster) d->minusCount();
@@ -221,29 +249,7 @@ void GameManager::collision()
 		}
 	}
 
-	// 플레이어와 플레이어 충돌 확인
-	int playerCnt = 0;
-	for (auto& dPlayer : m_pScene->m_listPlayer) {
-		bool bCol = false;
-		Player* pOtherPlayer = playerCnt ? m_pScene->m_listPlayer.front() : m_pScene->m_listPlayer.back(); 
 
-		playerCnt++;
-
-		if (m_pScene->m_listPlayer.front()->getPosition().IntersectRect(m_pScene->m_listPlayer.back()->getPosition())) {
-			if (dPlayer->getPosition().IntersectRect(pOtherPlayer->getPosition())) {
-				if (dPlayer->getPosition().bottom - pOtherPlayer->getPosition().bottom < -20) {
-					while (dPlayer->getPosition().IntersectRect(pOtherPlayer->getPosition())) dPlayer->Move(0, -0.1);
-
-					dPlayer->Move(0, 0.1);
-					dPlayer->notFalling();
-					bCollide = true;
-				}
-				else dPlayer->goBackX();
-			}
-			
-		}
-		//else 
-	}
 
 	// 몬스터와 몬스터 충돌
 	for (auto iter = m_pScene->m_listMonster.begin(); iter != m_pScene->m_listMonster.end(); ++iter) {

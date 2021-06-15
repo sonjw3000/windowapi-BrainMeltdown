@@ -210,7 +210,7 @@ void Player::render(HDC hdc)
 	RECT t = { m_tPosition.left, m_tPosition.top, m_tPosition.right, m_tPosition.bottom };
 
 #ifdef DEBUG
-	//FrameRect(hdc,&t, (HBRUSH)GetStockObject(BLACK_BRUSH));
+	FrameRect(hdc,&t, (HBRUSH)GetStockObject(BLACK_BRUSH));
 #endif // DEBUG
 
 

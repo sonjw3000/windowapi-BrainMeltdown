@@ -64,11 +64,11 @@ Scene::Scene(int iSceneNum) : m_iSceneNum(iSceneNum)
 		//p0->setPosition({ 375,3500,400,3550 });
 		//p1->setPosition({ 175,3500,200,3550 });
 
-		m_p0StartPos = { 375,1150,400,1200 };
-		m_p1StartPos = { 175,1150,200,1200 };
+		//m_p0StartPos = { 375,1150,400,1200 };
+		//m_p1StartPos = { 175,1150,200,1200 };
 
-		//m_p0StartPos = { 520,0,545,50 };
-		//m_p1StartPos = { 550,0,575,50 };
+		m_p0StartPos = { 1400,0,1425,50 };
+		m_p1StartPos = { 1460,0,1485,50 };
 
 		p0->setPosition(m_p0StartPos);
 		p1->setPosition(m_p1StartPos);
@@ -206,10 +206,16 @@ void Scene::input(float fDeltaTime)
 	for (auto const& d : m_listPlayer) {
 		d->input(fDeltaTime);
 
-		while (d->getPosition().top < 0) {
-			FRECT temp = d->getPosition();
-			temp.OffsetRect(0, 1);
-			d->setPosition(temp);
+		if (d->getPosition().top < 0) {
+			//d->hitCeil();
+			//RECT temp = d->getPosition();
+			//while (temp.top < 0) {
+			//	temp.top++;
+			//	temp.bottom++;
+			//}
+
+			////while (d->getPosition().top < 0) temp.OffsetRect(0, 1);
+			//d->setPosition(temp);
 		}
 	}
 	// camera
